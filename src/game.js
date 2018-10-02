@@ -99,22 +99,19 @@ function update()
   game.physics.arcade.overlap(world.player.sprite, coins, collectCoin, null, this);
 
   if (cursors.left.isDown) {
-      world.player.send('left');
-      //world.player.send('move', -1, 0);
-      //world.player.send(['move', -1, 0]);
-      //world.player.send({command:'move', x:-1});
+    world.player.send({command:'move', x:-1, y:0});
   }
   else if (cursors.right.isDown) {
-      world.player.send('right');
+    world.player.send({command:'move', x:1, y:0});
   }
   else if (cursors.up.isDown) {
-      world.player.send('up');
+    world.player.send({command:'move', x:0, y:-1});
   }
   else if (cursors.down.isDown) {
-      world.player.send('down');
+    world.player.send({command:'move', x:0, y:1});
   }
   else {
-  	world.player.send('none');
+  	world.player.send({command: null});
   }
 
   world.update();

@@ -5,49 +5,15 @@ Boo.Hero = class
 	constructor(params)
 	{
 		this.sprite = params.sprite;
-		this.moving = 'none';
-		this.toX = sprite.x;
-		this.toY = sprite.y;
-		this.command = 'none';
-	}
-
-	//only if it is not moving
-	setMove(m)
-	{
-		if (this.moving != 'none') return;
-
-		var x = this.sprite.x;
-		var y = this.sprite.y;
-
-		if (m == 'left') {
-			this.moving = 'left';
-			x = this.sprite.x - 32;
-		}
-		else if (m == 'right') {
-			this.moving = 'right';
-			x = this.sprite.x + 32;
-		}
-		else if (m == 'up') {
-			this.moving = 'up';
-			y = this.sprite.y - 32;
-		}
-		else if (m == 'down') {
-			this.moving = 'down';
-			y = this.sprite.y + 32;
-		}
-
-		if(this.canPass(x, y)) {
-			this.toX = x;
-			this.toY = y;
-		}
-		else {
-			this.moving = 'none';
-		};
+		this.moving = false;
+		this.movingPosition = new Phaser.Point(this.sprite.x, this.sprite.y);
+		this.command = {command: null};
 	}
 
 	send(command)
 	{
-		this.command = command;
+		this.command = command || {command: null};
+		//if (!this.command.hasOwnProperty(myProp))
 	}
 
 	canPass(x,y) {
@@ -56,23 +22,7 @@ Boo.Hero = class
 
 	isMoveFinished()
 	{
-		if (this.moving == 'left' && this.sprite.x <= this.toX) {
-				return true;
-			}
-
-			if (this.moving == 'right' && this.sprite.x >= this.toX) {
-				return true;
-			}
-
-			if (this.moving == 'up' && this.sprite.y <= this.toY) {
-				return true;
-			}
-
-			if (this.moving == 'down' && this.sprite.y >= this.toY) {
-				return true;
-			}
-
-			return false;
+		return (Phaser.Point.equals(this.sprite.position, this.movingPosition));
 	}
 
 	move()
@@ -80,48 +30,43 @@ Boo.Hero = class
 		this.sprite.body.velocity.x = 0;
 		this.sprite.body.velocity.y = 0;
 
-		if (this.moving == 'none') {
-			this.sprite.animations.stop('walk');
-		}
-		else {
+		if (this.moving) {
 			this.sprite.animations.play('walk');
 		}
+		else {
+			this.sprite.animations.stop('walk');
+			return;
+		}
+
+		var STEP = 4;
+
+		var dx = this.sprite.x - this.movingPosition.x;
+		var dy = this.sprite.y - this.movingPosition.y;
 		
-		if (this.moving == 'left') this.sprite.x -= 4;
-		else if (this.moving == 'right') this.sprite.x += 4;
-		else if (this.moving == 'up') this.sprite.y -= 4;
-		else if (this.moving == 'down') this.sprite.y += 4;		
+		if (dx > 0) this.sprite.x -= STEP;
+		else if (dx < 0) this.sprite.x += STEP;
+
+		if (dy > 0) this.sprite.y -= STEP;
+		else if (dy < 0) this.sprite.y += STEP;
 	}
 
 	update()
 	{
-		if (this.isMoveFinished()) this.moving = 'none';
-	
+		if (this.isMoveFinished()) this.moving = false;
 
-		if (this.moving == 'none') {
+		if (this.command.command == 'move' && !this.moving) {
 
-			if (this.command == 'left') {
-				this.setMove('left');
-				this.command = 'none';
-				this.sprite.scale.x = -2;
-			}
+			var TILE_SIZE = 32;
 
-			if (this.command == 'right') {
-				this.setMove('right');
-				this.command = 'none';
-				world.nextTurn();
-				this.sprite.scale.x = 2;
-			}
+			this.movingPosition.x = this.sprite.x + TILE_SIZE * this.command.x;
+			this.movingPosition.y = this.sprite.y + TILE_SIZE * this.command.y;
+			if (this.canPass(this.movingPosition.x, this.movingPosition.y)) this.moving = true;
 
-			if (this.command == 'up') {
-				this.setMove('up');
-				this.command = 'none';
-			}
+			if (this.command.x < 0) this.sprite.scale.x = -2;
+			if (this.command.x > 0) this.sprite.scale.x = 2;
 
-			if (this.command == 'down') {
-				this.setMove('down');
-				this.command = 'none';
-			}
+			this.send({command: null});
+			//world.nextTurn();
 		}
 
 		this.move();
