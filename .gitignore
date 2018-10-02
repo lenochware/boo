@@ -1,0 +1,6 @@
+# ignored directories
+
+/_etc/*
+/lib/*
+/assets/*
+*.bak
