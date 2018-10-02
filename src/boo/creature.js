@@ -31,9 +31,6 @@ Boo.Creature = class
 
 	move()
 	{
-		this.sprite.body.velocity.x = 0;
-		this.sprite.body.velocity.y = 0;
-
 		if (this.moving) {
 			this.sprite.animations.play('walk');
 		}

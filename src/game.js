@@ -20,9 +20,6 @@ var map;
 var coins;
 
 var layer;
-
-var world = {};
-
 var marker;
 
 var world = new Boo.World;
@@ -65,8 +62,7 @@ function create()
     cursors = game.input.keyboard.createCursorKeys();
 
     var player = new Boo.Player({sprite: addSprite(256, 64, 'brute')});
-    game.camera.follow(player.sprite);
-
+    
     world.setPlayer(player);
 
     var monster = new Boo.Monster({sprite: addSprite(384, 96, 'brute')});

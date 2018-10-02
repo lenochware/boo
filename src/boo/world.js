@@ -11,6 +11,7 @@ Boo.World = class
 	setPlayer(player)
 	{
 		this.player = player;
+		game.camera.follow(player.sprite);
 	}
 
 	addMonster(m)
