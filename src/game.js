@@ -64,15 +64,15 @@ function create()
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    var hero = new Boo.Hero({sprite: addSprite(256, 64, 'brute')});
-    game.camera.follow(hero.sprite);
+    var player = new Boo.Player({sprite: addSprite(256, 64, 'brute')});
+    game.camera.follow(player.sprite);
 
-    world.setPlayer(hero);
+    world.setPlayer(player);
 
-    var monster = new Boo.Hero({sprite: addSprite(384, 96, 'brute')});
+    var monster = new Boo.Monster({sprite: addSprite(384, 96, 'brute')});
     world.addMonster(monster);
 
-    monster = new Boo.Hero({sprite: addSprite(416, 128, 'brute')});
+    monster = new Boo.Monster({sprite: addSprite(416, 128, 'brute')});
     world.addMonster(monster);
 
 }
@@ -94,8 +94,8 @@ function addSprite(x, y, name)
 
 function update()
 {
-  //game.physics.arcade.collide(hero.sprite, layer, function() { hero.moving = 'none';});
- //game.physics.arcade.overlap(hero.sprite, layer, function() { hero.moving = 'none'; console.log('aaa');});
+  //game.physics.arcade.collide(player.sprite, layer, function() { player.moving = 'none';});
+ //game.physics.arcade.overlap(player.sprite, layer, function() { player.moving = 'none'; console.log('aaa');});
   game.physics.arcade.overlap(world.player.sprite, coins, collectCoin, null, this);
 
   if (cursors.left.isDown) {
