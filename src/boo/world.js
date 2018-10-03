@@ -31,7 +31,7 @@ Boo.World = class
 	nextTurn()
 	{
 		for (var i = 0; i < this.monsters.length; i++) {
-  		this.monsters[i].send({command: 'move', x:-1, y:0});
+  		this.monsters[i].live();
 		}
 	}
 }
