@@ -5,8 +5,13 @@ Boo.World = class
 	constructor() {
     this.monsters = [];
     this.player = null;
-
+    this.map = null;
   }
+
+  // getTile(tileX, tileY)
+  // {
+  // 	console.log(this.map.getTileWorldXY(x, y))
+  // }
 
 	setPlayer(player)
 	{

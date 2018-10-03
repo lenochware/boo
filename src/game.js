@@ -16,7 +16,6 @@ function preload() {
 }
 
 var cursors;
-var map;
 var coins;
 
 var layer;
@@ -26,15 +25,15 @@ var world = new Boo.World;
 
 function create()
 {
-    map = game.add.tilemap('map');
+    world.map = game.add.tilemap('map');
 
-    map.addTilesetImage('ground_1x1');
-    map.addTilesetImage('walls_1x2');
-    map.addTilesetImage('tiles2');
+    world.map.addTilesetImage('ground_1x1');
+    world.map.addTilesetImage('walls_1x2');
+    world.map.addTilesetImage('tiles2');
 
-    map.setCollisionBetween(1, 12);
+    world.map.setCollisionBetween(1, 12);
 
-    layer = map.createLayer('Tile Layer 1');
+    layer = world.map.createLayer('Tile Layer 1');
 
     layer.resizeWorld();
 
@@ -43,6 +42,9 @@ function create()
     //game.time.advancedTiming = true;
    // game.renderer.renderSession.roundPixels = true;
    //game.forceSingleUpdate = true;
+
+   var tile = world.map.getTile(3,3);
+   tile.properties.test = 'test';
 
     //  Create our tile selector at the top of the screen
     createTileSelector();
@@ -53,7 +55,7 @@ function create()
     coins.enableBody = true;
 
     //  And now we convert all of the Tiled objects with an ID of 34 into sprites within the coins group
-    map.createFromObjects('Object Layer 1', 34, 'coin', 0, true, false, coins);
+    world.map.createFromObjects('Object Layer 1', 34, 'coin', 0, true, false, coins);
 
     //  Add animations to all of the coin sprites
     coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
@@ -126,7 +128,8 @@ function updateMarker() {
 
     if (game.input.mousePointer.isDown)
     {
-        map.putTile(/*currentTile*/0, layer.getTileX(marker.x), layer.getTileY(marker.y), layer);
+      console.log(world.map.getTile(layer.getTileX(marker.x), layer.getTileY(marker.y)));
+      //world.map.putTile(/*currentTile*/0, layer.getTileX(marker.x), layer.getTileY(marker.y), layer);
         // map.fill(currentTile, layer.getTileX(marker.x), layer.getTileY(marker.y), 4, 4, layer);
     }
 

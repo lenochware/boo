@@ -19,7 +19,7 @@ Boo.Creature = class
 	}
 
 	canPass(x,y) {
-		return map.getTileWorldXY(x, y) == null;
+		return world.map.getTileWorldXY(x, y) == null;
 	}
 
 	setSprite(name, x, y)
@@ -64,6 +64,8 @@ Boo.Creature = class
 		else if (dy < 0) this.sprite.y += STEP;
 	}
 
+	onNextTurn() {}
+
   update()
 	{
 		if (this._isMoveFinished()) this._moving = false;
@@ -74,13 +76,15 @@ Boo.Creature = class
 
 			this._movingPosition.x = this.sprite.x + TILE_SIZE * this.command.x;
 			this._movingPosition.y = this.sprite.y + TILE_SIZE * this.command.y;
-			if (this.canPass(this._movingPosition.x, this._movingPosition.y)) this._moving = true;
+			if (this.canPass(this._movingPosition.x, this._movingPosition.y)) {
+				this._moving = true;
+				this.onNextTurn();
+			}
 
 			if (this.command.x < 0) this.sprite.scale.x = -2;
 			if (this.command.x > 0) this.sprite.scale.x = 2;
 
 			this.send({command: null});
-			if (this == world.player) world.nextTurn();
 		}
 
 		this._move();
