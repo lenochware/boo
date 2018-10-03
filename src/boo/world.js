@@ -10,12 +10,14 @@ Boo.World = class
 
 	setPlayer(player)
 	{
+		player.setSprite(player.params.family, player.params.x, player.params.y);
 		this.player = player;
 		game.camera.follow(player.sprite);
 	}
 
 	addMonster(m)
 	{
+		m.setSprite(m.params.family, m.params.x, m.params.y);
 		this.monsters.push(m);
 	}
 

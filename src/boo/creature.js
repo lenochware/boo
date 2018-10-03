@@ -4,9 +4,11 @@ Boo.Creature = class
 {
 	constructor(params)
 	{
-		this.sprite = params.sprite;
-		this.moving = false;
-		this.movingPosition = new Phaser.Point(this.sprite.x, this.sprite.y);
+		this.params = params;
+		this.sprite = null;
+		this._visible = false;
+		this._moving = false;
+		this._movingPosition = new Phaser.Point(this.params.x, this.params.y);
 		this.command = {command: null};
 	}
 
@@ -16,22 +18,33 @@ Boo.Creature = class
 		//if (!this.command.hasOwnProperty(myProp))
 	}
 
-	is(attrib) {
-		return false;
-	}
-
 	canPass(x,y) {
 		return map.getTileWorldXY(x, y) == null;
 	}
 
-	isMoveFinished()
+	setSprite(name, x, y)
 	{
-		return (Phaser.Point.equals(this.sprite.position, this.movingPosition));
+		if (!this.sprite) {
+	    this.sprite = game.add.sprite(x - 16, y - 16, name);
+	    this.sprite.animations.add('walk', [4, 5, 6, 7], 10, true);
+		}
+
+    this.sprite.anchor.set(0.5);
+
+    game.physics.arcade.enable(this.sprite);
+    this.sprite.body.setSize(16, 16, 0, 0);
+    this.sprite.scale.setTo(2);
+    //sprite.body.collideWorldBounds = true;
 	}
 
-	move()
+	_isMoveFinished()
 	{
-		if (this.moving) {
+		return (Phaser.Point.equals(this.sprite.position, this._movingPosition));
+	}
+
+	_move()
+	{
+		if (this._moving) {
 			this.sprite.animations.play('walk');
 		}
 		else {
@@ -41,8 +54,8 @@ Boo.Creature = class
 
 		var STEP = 4;
 
-		var dx = this.sprite.x - this.movingPosition.x;
-		var dy = this.sprite.y - this.movingPosition.y;
+		var dx = this.sprite.x - this._movingPosition.x;
+		var dy = this.sprite.y - this._movingPosition.y;
 		
 		if (dx > 0) this.sprite.x -= STEP;
 		else if (dx < 0) this.sprite.x += STEP;
@@ -51,17 +64,17 @@ Boo.Creature = class
 		else if (dy < 0) this.sprite.y += STEP;
 	}
 
-	update()
+  update()
 	{
-		if (this.isMoveFinished()) this.moving = false;
+		if (this._isMoveFinished()) this._moving = false;
 
-		if (this.command.command == 'move' && !this.moving) {
+		if (this.command.command == 'move' && !this._moving) {
 
 			var TILE_SIZE = 32;
 
-			this.movingPosition.x = this.sprite.x + TILE_SIZE * this.command.x;
-			this.movingPosition.y = this.sprite.y + TILE_SIZE * this.command.y;
-			if (this.canPass(this.movingPosition.x, this.movingPosition.y)) this.moving = true;
+			this._movingPosition.x = this.sprite.x + TILE_SIZE * this.command.x;
+			this._movingPosition.y = this.sprite.y + TILE_SIZE * this.command.y;
+			if (this.canPass(this._movingPosition.x, this._movingPosition.y)) this._moving = true;
 
 			if (this.command.x < 0) this.sprite.scale.x = -2;
 			if (this.command.x > 0) this.sprite.scale.x = 2;
@@ -70,7 +83,7 @@ Boo.Creature = class
 			if (this == world.player) world.nextTurn();
 		}
 
-		this.move();
+		this._move();
 
 	}	
 }

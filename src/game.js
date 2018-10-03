@@ -61,31 +61,16 @@ function create()
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    var player = new Boo.Player({sprite: addSprite(256, 64, 'brute')});
+    var player = new Boo.Player({family: 'brute', x:256, y:64});
     
     world.setPlayer(player);
 
-    var monster = new Boo.Monster({sprite: addSprite(384, 96, 'brute')});
+    var monster = new Boo.Monster({family: 'brute', x:384, y:96});
     world.addMonster(monster);
 
-    monster = new Boo.Monster({sprite: addSprite(416, 128, 'brute')});
+    monster = new Boo.Monster({family: 'brute', x:416, y:128});
     world.addMonster(monster);
 
-}
-
-function addSprite(x, y, name)
-{
-    sprite = game.add.sprite(x - 16, y - 16, name);
-    sprite.anchor.set(0.5);
-
-    game.physics.arcade.enable(sprite);
-
-    //  This adjusts the collision body size.
-    sprite.body.setSize(16, 16, 0, 0);
-    sprite.scale.setTo(2);
-    //sprite.body.collideWorldBounds = true;
-    sprite.animations.add('walk', [4, 5, 6, 7], 10, true);
-    return sprite;
 }
 
 function update()
