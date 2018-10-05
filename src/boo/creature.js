@@ -66,7 +66,7 @@ Boo.Creature = class
 			return;
 		}
 
-		var STEP = 1;
+		var STEP = 4;
 
 		var dx = this.sprite.x - this._position.worldX;
 		var dy = this.sprite.y - this._position.worldY;

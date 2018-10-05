@@ -4,8 +4,8 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas-div', { preload: pre
 function preload() {
 
     game.load.tilemap('map', 'assets/tilemaps/maps/test_level.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles1', 'assets/tilemaps/tiles/tiles1.png');
-    game.load.spritesheet('brute', 'assets/sprites/brute.png', 12, 16);
+    game.load.image('tiles1', 'assets/tilemaps/tiles/tiles1_big.png');
+    game.load.spritesheet('brute', 'assets/sprites/brute_big.png', 24, 32);
 
 }
 
@@ -26,7 +26,7 @@ function create()
     layer = world.map.createLayer('floor');
 
     // layer.setScale(2,2);
-    // layer.resizeWorld();
+    layer.resizeWorld();
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -41,6 +41,7 @@ function create()
     createTileSelector();
     game.input.addMoveCallback(updateMarker, this);
 
+
     cursors = game.input.keyboard.createCursorKeys();
 
     var player = new Boo.Player({family: 'brute', x:2, y:2});
@@ -53,6 +54,8 @@ function create()
     monster = new Boo.Monster({family: 'brute', x:3, y:5});
     world.addMonster(monster);
 
+    //game.world.scale.setTo(2, 2);
+    //game.camera.scale.setTo(2,2);
 }
 
 function update()
