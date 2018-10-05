@@ -3,21 +3,13 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas-div', { preload: pre
 
 function preload() {
 
-    game.load.tilemap('map', 'assets/tilemaps/maps/features_test.json', null, Phaser.Tilemap.TILED_JSON);
-
-    game.load.image('ground_1x1', 'assets/tilemaps/tiles/ground_1x1.png');
-    game.load.image('walls_1x2', 'assets/tilemaps/tiles/walls_1x2.png');
-    game.load.image('tiles2', 'assets/tilemaps/tiles/tiles2.png');
-
-    game.load.image('phaser', 'assets/sprites/arrow.png');
-    game.load.spritesheet('coin', 'assets/sprites/coin.png', 32, 32);
+    game.load.tilemap('map', 'assets/tilemaps/maps/test_level.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.image('tiles1', 'assets/tilemaps/tiles/tiles1.png');
     game.load.spritesheet('brute', 'assets/sprites/brute.png', 12, 16);
 
 }
 
 var cursors;
-var coins;
-
 var layer;
 var marker;
 
@@ -27,15 +19,14 @@ function create()
 {
     world.map = game.add.tilemap('map');
 
-    world.map.addTilesetImage('ground_1x1');
-    world.map.addTilesetImage('walls_1x2');
-    world.map.addTilesetImage('tiles2');
+    world.map.addTilesetImage('tiles1');
 
-    world.map.setCollisionBetween(1, 12);
+//    world.map.setCollisionBetween(1, 12);
 
-    layer = world.map.createLayer('Tile Layer 1');
+    layer = world.map.createLayer('floor');
 
-    layer.resizeWorld();
+    // layer.setScale(2,2);
+    // layer.resizeWorld();
 
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -50,37 +41,22 @@ function create()
     createTileSelector();
     game.input.addMoveCallback(updateMarker, this);
 
-    //  Here we create our coins group
-    coins = game.add.group();
-    coins.enableBody = true;
-
-    //  And now we convert all of the Tiled objects with an ID of 34 into sprites within the coins group
-    world.map.createFromObjects('Object Layer 1', 34, 'coin', 0, true, false, coins);
-
-    //  Add animations to all of the coin sprites
-    coins.callAll('animations.add', 'animations', 'spin', [0, 1, 2, 3, 4, 5], 10, true);
-    coins.callAll('animations.play', 'animations', 'spin');
-
     cursors = game.input.keyboard.createCursorKeys();
 
-    var player = new Boo.Player({family: 'brute', x:256, y:64});
+    var player = new Boo.Player({family: 'brute', x:2, y:2});
     
     world.setPlayer(player);
 
-    var monster = new Boo.Monster({family: 'brute', x:384, y:96});
+    var monster = new Boo.Monster({family: 'brute', x:3, y:4});
     world.addMonster(monster);
 
-    monster = new Boo.Monster({family: 'brute', x:416, y:128});
+    monster = new Boo.Monster({family: 'brute', x:3, y:5});
     world.addMonster(monster);
 
 }
 
 function update()
 {
-  //game.physics.arcade.collide(player.sprite, layer, function() { player.moving = 'none';});
- //game.physics.arcade.overlap(player.sprite, layer, function() { player.moving = 'none'; console.log('aaa');});
-  game.physics.arcade.overlap(world.player.sprite, coins, collectCoin, null, this);
-
   if (cursors.left.isDown) {
     world.player.send({command:'move', x:-1, y:0});
   }
@@ -110,7 +86,7 @@ function render()
 {
    // game.debug.body(sprite);
   //game.debug.text('sprite', 32, 32);
-  //game.debug.spriteInfo(sprite, 32, 32);
+  //game.debug.spriteInfo(world.player.sprite, 32, 32);
 }
 
 
@@ -118,13 +94,13 @@ function createTileSelector() {
     //  Our painting marker
     marker = game.add.graphics();
     marker.lineStyle(2, 0x00ff00, 1);
-    marker.drawRect(0, 0, 32, 32);
+    marker.drawRect(0, 0, world.map.tileWidth, world.map.tileHeight);
 }
 
 function updateMarker() {
 
-    marker.x = layer.getTileX(game.input.activePointer.worldX) * 32;
-    marker.y = layer.getTileY(game.input.activePointer.worldY) * 32;
+    marker.x = layer.getTileX(game.input.activePointer.worldX) * world.map.tileWidth;
+    marker.y = layer.getTileY(game.input.activePointer.worldY) * world.map.tileHeight;
 
     if (game.input.mousePointer.isDown)
     {

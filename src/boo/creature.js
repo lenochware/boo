@@ -8,7 +8,7 @@ Boo.Creature = class
 		this.sprite = null;
 		this._visible = false;
 		this._moving = false;
-		this._movingPosition = new Phaser.Point(this.params.x, this.params.y);
+		this._position = {};
 		this.command = {command: null};
 	}
 
@@ -19,13 +19,27 @@ Boo.Creature = class
 	}
 
 	canPass(x,y) {
-		return world.map.getTileWorldXY(x, y) == null;
+		return world.map.getTile(x, y).index != 17;
+	}
+
+	setPosition(x, y, setSprite = true)
+	{
+		this._position.x = x;
+		this._position.y = y;
+		this._position.worldX = x * world.map.tileWidth + world.map.tileWidth / 2;
+		this._position.worldY = y * world.map.tileHeight + world.map.tileHeight / 2;
+
+		if (setSprite) {
+			this.sprite.x = this._position.worldX;
+			this.sprite.y = this._position.worldY;		
+		}
 	}
 
 	setSprite(name, x, y)
 	{
 		if (!this.sprite) {
-	    this.sprite = game.add.sprite(x - 16, y - 16, name);
+	    this.sprite = game.add.sprite(0, 0, name);
+			this.setPosition(x, y);
 	    this.sprite.animations.add('walk', [4, 5, 6, 7], 10, true);
 		}
 
@@ -33,13 +47,13 @@ Boo.Creature = class
 
     game.physics.arcade.enable(this.sprite);
     this.sprite.body.setSize(16, 16, 0, 0);
-    this.sprite.scale.setTo(2);
+    //this.sprite.scale.setTo(2);
     //sprite.body.collideWorldBounds = true;
 	}
 
 	_isMoveFinished()
 	{
-		return (Phaser.Point.equals(this.sprite.position, this._movingPosition));
+		return (this.sprite.x == this._position.worldX && this.sprite.y == this._position.worldY);
 	}
 
 	_move()
@@ -52,10 +66,10 @@ Boo.Creature = class
 			return;
 		}
 
-		var STEP = 4;
+		var STEP = 1;
 
-		var dx = this.sprite.x - this._movingPosition.x;
-		var dy = this.sprite.y - this._movingPosition.y;
+		var dx = this.sprite.x - this._position.worldX;
+		var dy = this.sprite.y - this._position.worldY;
 		
 		if (dx > 0) this.sprite.x -= STEP;
 		else if (dx < 0) this.sprite.x += STEP;
@@ -71,18 +85,14 @@ Boo.Creature = class
 		if (this._isMoveFinished()) this._moving = false;
 
 		if (this.command.command == 'move' && !this._moving) {
-
-			var TILE_SIZE = 32;
-
-			this._movingPosition.x = this.sprite.x + TILE_SIZE * this.command.x;
-			this._movingPosition.y = this.sprite.y + TILE_SIZE * this.command.y;
-			if (this.canPass(this._movingPosition.x, this._movingPosition.y)) {
+			if (this.canPass(this._position.x + this.command.x, this._position.y + this.command.y)) {
 				this._moving = true;
+				this.setPosition(this._position.x + this.command.x, this._position.y + this.command.y, false);
 				this.onNextTurn();
 			}
 
-			if (this.command.x < 0) this.sprite.scale.x = -2;
-			if (this.command.x > 0) this.sprite.scale.x = 2;
+			if (this.command.x < 0) this.sprite.scale.x = -1;
+			if (this.command.x > 0) this.sprite.scale.x = 1;
 
 			this.send({command: null});
 		}
