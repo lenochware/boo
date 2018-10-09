@@ -2,13 +2,21 @@
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas-div', { preload: preload, create: create, update: update, render: render }, false, false/*antialias*/);
 
 function preload() {
+    loadLevel(Boo.levels.level1);
 
-    game.load.tilemap('map', 'assets/tilemaps/maps/test_level.json', null, Phaser.Tilemap.TILED_JSON);
-    game.load.image('tiles1', 'assets/tilemaps/tiles/tiles1_big.png');
-    game.load.spritesheet('brute', 'assets/sprites/brute_big.png', 24, 32);
-    game.load.spritesheet('warrior', 'assets/sprites/warrior_big.png', 24, 29);
-
+    // game.load.tilemap('map', 'assets/tilemaps/maps/test_level.json', null, Phaser.Tilemap.TILED_JSON);
+    // game.load.image('tiles1', 'assets/tilemaps/tiles/tiles1_big.png');
+    // game.load.spritesheet('brute', 'assets/sprites/brute_big.png', 24, 32);
+    // game.load.spritesheet('warrior', 'assets/sprites/warrior_big.png', 24, 29);
 }
+
+function loadLevel(level) {
+  game.load.tilemap('map', level.map, null, Phaser.Tilemap.TILED_JSON);
+  game.load.image('tiles1', level.tiles);
+  //game.load.spritesheet('brute', level.sprites.brute.width, level.sprites.brute.height);
+  _.each(level.sprites, (sprite,key) => game.load.spritesheet(key, sprite.image, sprite.width, sprite.height));
+}
+
 
 var cursors;
 var layer;

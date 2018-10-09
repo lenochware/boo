@@ -12,7 +12,7 @@ foreach (glob("src/game*.js") as $path) {
 }
 
 $template['links_html'] = paramStr("<a href=\"index.php?script={path}\">{path}</a><br>", $template['links']);
-$template['scripts_html'] = paramStr("<script type=\"text/javascript\" src=\"{path}\"></script>", $template['scripts']);
+$template['scripts_html'] = paramStr("<script type=\"text/javascript\" src=\"{path}\"></script>\n", $template['scripts']);
 
 print paramStr(file_get_contents('index.tpl'), $template);
 die();
