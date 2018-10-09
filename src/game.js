@@ -6,6 +6,7 @@ function preload() {
     game.load.tilemap('map', 'assets/tilemaps/maps/test_level.json', null, Phaser.Tilemap.TILED_JSON);
     game.load.image('tiles1', 'assets/tilemaps/tiles/tiles1_big.png');
     game.load.spritesheet('brute', 'assets/sprites/brute_big.png', 24, 32);
+    game.load.spritesheet('warrior', 'assets/sprites/warrior_big.png', 24, 29);
 
 }
 
@@ -18,6 +19,7 @@ var world = new Boo.World;
 function create()
 {
     world.map = game.add.tilemap('map');
+    console.log(world.map);
 
     world.map.addTilesetImage('tiles1');
 
@@ -44,7 +46,7 @@ function create()
 
     cursors = game.input.keyboard.createCursorKeys();
 
-    var player = new Boo.Player({family: 'brute', x:2, y:2});
+    var player = new Boo.Player({family: 'warrior', x:2, y:2});
     
     world.setPlayer(player);
 

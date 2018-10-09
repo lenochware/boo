@@ -19,11 +19,20 @@ Boo.Creature = class
 	}
 
 	canPass(x,y) {
+		var tile = world.map.getTile(x, y);
+		if (tile.properties && tile.properties.monster) return false;
 		return world.map.getTile(x, y).index != 17;
 	}
 
 	setPosition(x, y, setSprite = true)
 	{
+		if (!_.isEmpty(this._position)) {
+			var tile = world.map.getTile(this._position.x, this._position.y);
+			tile.properties.monster = null;			
+		}
+		tile = world.map.getTile(x, y);
+		tile.properties.monster = this;
+
 		this._position.x = x;
 		this._position.y = y;
 		this._position.worldX = x * world.map.tileWidth + world.map.tileWidth / 2;
