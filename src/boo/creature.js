@@ -49,7 +49,9 @@ Boo.Creature = class
 		if (!this.sprite) {
 	    this.sprite = game.add.sprite(0, 0, name);
 			this.setPosition(x, y);
-	    this.sprite.animations.add('walk', [4, 5, 6, 7], 10, true);
+			_.each(currentLevel.sprites[name].animations,
+				(anim,key) => this.sprite.animations.add(key, anim.frames, anim.frameRate, true)
+			);
 		}
 
     this.sprite.anchor.set(0.5);

@@ -4,6 +4,7 @@ var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas-div', { preload: pre
 var cursors;
 var layer;
 var marker;
+var currentLevel = null;
 
 var world = new Boo.World;
 
@@ -16,6 +17,7 @@ function loadLevel(level) {
   game.load.tilemap('map', level.map, null, Phaser.Tilemap.TILED_JSON);
   game.load.image('tiles1', level.tiles);
   _.each(level.sprites, (sprite,key) => game.load.spritesheet(key, sprite.image, sprite.width, sprite.height));
+  currentLevel = level;
 }
 
 function create()
