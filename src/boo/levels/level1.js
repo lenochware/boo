@@ -28,5 +28,21 @@ Boo.levels.level1 = {
 				}
 			}
 		}
+	},
+
+	"monsters": {
+		"brute": {
+			"sprite": "brute",
+			"name": "Brute",
+			"health": 10,
+			"attack": 1
+		},
+		
+		"warrior": {
+			"sprite": "warrior",
+			"name": "You",
+			"health": 10,
+			"attack": 1
+		}
 	}
 }

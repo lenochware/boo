@@ -4,8 +4,9 @@ Boo.Creature = class
 {
 	constructor(params)
 	{
-		this.params = params;
+		this.params = _.extend(currentLevel.monsters[params.family], params);
 		this.sprite = null;
+		this.target = null;
 		this._visible = false;
 		this._moving = false;
 		this._position = {};
@@ -91,6 +92,38 @@ Boo.Creature = class
 
 	onNextTurn() {}
 
+	attack(enemy)
+	{
+		enemy.wound({"monster": this, "strength": 1});
+		if (enemy.isDestroyed) this.target = null;
+		console.log("Attacked " + this.params.name);
+	}
+
+	wound(attack)
+	{
+		this.params.health -= attack.strength;
+		if (this.params.health <= 0) this.death();
+		this.target = attack.monster;
+	}
+
+	death()
+	{
+		console.log(this.params.name + " is death.");
+	}
+
+	isDestroyed()
+	{
+		return (this.params.health <= 0);
+	}
+
+	canReach(target)
+	{
+    if (!target) return false;
+    if (Math.abs(target._position.x - this._position.x) > 1) return false;
+    if (Math.abs(target._position.y - this._position.y) > 1) return false;
+    return true;
+	}
+
   update()
 	{
 		if (this._isMoveFinished()) this._moving = false;
@@ -104,11 +137,13 @@ Boo.Creature = class
 
 			if (this.command.x < 0) this.sprite.scale.x = -1;
 			if (this.command.x > 0) this.sprite.scale.x = 1;
+		}
 
-			this.send({command: null});
+		if (this.command.command == 'attack' && this.canReach(this.target)) {
+			this.attack(this.target);
 		}
 
 		this._move();
-
+		this.send({command: null});
 	}	
 }

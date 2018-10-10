@@ -8,7 +8,6 @@ var currentLevel = null;
 
 var world = new Boo.World;
 
-
 function preload() {
     loadLevel(Boo.levels.level1);
 }
@@ -23,11 +22,7 @@ function loadLevel(level) {
 function create()
 {
     world.map = game.add.tilemap('map');
-    console.log(world.map);
-
     world.map.addTilesetImage('tiles1');
-
-//    world.map.setCollisionBetween(1, 12);
 
     layer = world.map.createLayer('floor');
 
@@ -82,13 +77,9 @@ function update()
   	world.player.send({command: null});
   }
 
+  //if (game.input.keyboard.lastKey) console.log(game.input.keyboard.lastKey.keyCode);
+
   world.update();
-}
-
-
-function collectCoin(player, coin)
-{
-  coin.kill();
 }
 
 function render()
