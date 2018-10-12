@@ -8,7 +8,7 @@ Boo.Creature = class
 		this.sprite = null;
 		this.target = null;
 		this._visible = false;
-		this._moving = false;
+		this.state = 'idle';
 		this._position = {};
 		this.command = {command: null};
 	}
@@ -21,7 +21,15 @@ Boo.Creature = class
 
 	canPass(x,y) {
 		var tile = world.map.getTile(x, y);
-		if (tile.properties && tile.properties.monster) return false;
+		if (tile.properties && tile.properties.monster) {
+
+			//Attack anything which you hit to. TODO: Better logic not in canPass.
+			this.target = tile.properties.monster; 
+			tile.properties.monster.target = this;
+
+			return false;
+		}
+
 		return world.map.getTile(x, y).index != 17;
 	}
 
@@ -70,11 +78,15 @@ Boo.Creature = class
 
 	_move()
 	{
-		if (this._moving) {
+		if (this.state == 'moving') {
 			this.sprite.animations.play('walk');
 		}
 		else {
-			this.sprite.animations.stop('walk');
+			//var paused = this.sprite.animations.currentAnim? this.sprite.animations.currentAnim.isPlaying : null;
+			if (this.sprite.animations.currentAnim.isPlaying) {
+				this.sprite.animations.stop();
+				//console.log('stop ');
+			}
 			return;
 		}
 
@@ -95,8 +107,8 @@ Boo.Creature = class
 	attack(enemy)
 	{
 		enemy.wound({"monster": this, "strength": 1});
-		if (enemy.isDestroyed) this.target = null;
-		console.log("Attacked " + this.params.name);
+		if (enemy.isDestroyed()) this.target = null;
+		console.log("Attacked " + enemy.params.name);
 	}
 
 	wound(attack)
@@ -126,11 +138,11 @@ Boo.Creature = class
 
   update()
 	{
-		if (this._isMoveFinished()) this._moving = false;
+		if (this.state == 'moving' && this._isMoveFinished()) this.state = 'idle';
 
-		if (this.command.command == 'move' && !this._moving) {
+		if (this.command.command == 'move' && this.state == 'idle') {
 			if (this.canPass(this._position.x + this.command.x, this._position.y + this.command.y)) {
-				this._moving = true;
+				this.state = 'moving';
 				this.setPosition(this._position.x + this.command.x, this._position.y + this.command.y, false);
 				this.onNextTurn();
 			}
@@ -139,8 +151,11 @@ Boo.Creature = class
 			if (this.command.x > 0) this.sprite.scale.x = 1;
 		}
 
-		if (this.command.command == 'attack' && this.canReach(this.target)) {
+		if (this.command.command == 'attack' &&  this.state == 'idle' && this.canReach(this.target)) {
+			this.state = 'attacking';
 			this.attack(this.target);
+			this.onNextTurn();
+			game.time.events.add(500, () => this.state = 'idle');
 		}
 
 		this._move();
