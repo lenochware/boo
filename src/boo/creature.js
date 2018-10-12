@@ -80,27 +80,28 @@ Boo.Creature = class
 	{
 		if (this.state == 'moving') {
 			this.sprite.animations.play('walk');
+
+			var STEP = 4;
+
+			var dx = this.sprite.x - this._position.worldX;
+			var dy = this.sprite.y - this._position.worldY;
+			
+			if (dx > 0) this.sprite.x -= STEP;
+			else if (dx < 0) this.sprite.x += STEP;
+
+			if (dy > 0) this.sprite.y -= STEP;
+			else if (dy < 0) this.sprite.y += STEP;
 		}
 		else {
-			//var paused = this.sprite.animations.currentAnim? this.sprite.animations.currentAnim.isPlaying : null;
-			if (this.sprite.animations.currentAnim.isPlaying) {
-				this.sprite.animations.stop();
-				this.sprite.animations.currentAnim.frame = 0;
-				//console.log('stop ');
+			var anim = this.sprite.animations.currentAnim;
+			if (anim.name != 'idle' && anim.isPlaying) {
+				// this.sprite.animations.stop();
+				// this.sprite.animations.currentAnim.frame = 0;
+				game.time.events.add(game.rnd.between(100, 1000), () => this.sprite.animations.play('idle'));
 			}
 			return;
 		}
 
-		var STEP = 4;
-
-		var dx = this.sprite.x - this._position.worldX;
-		var dy = this.sprite.y - this._position.worldY;
-		
-		if (dx > 0) this.sprite.x -= STEP;
-		else if (dx < 0) this.sprite.x += STEP;
-
-		if (dy > 0) this.sprite.y -= STEP;
-		else if (dy < 0) this.sprite.y += STEP;
 	}
 
 	onNextTurn() {}

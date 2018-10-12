@@ -14,7 +14,7 @@ Boo.levels.level1 = {
 			"animations": {
 				"idle": {
 					"frames": [0, 0, 0, 1, 0, 0, 1, 1],
-					"frameRate": 10
+					"frameRate": 2
 				},
 				"walk": {
 					"frames": [4, 5, 6, 7],
@@ -38,7 +38,7 @@ Boo.levels.level1 = {
 			"animations": {
 				"idle": {
 					"frames": [0, 0, 0, 1, 0, 0, 1, 1],
-					"frameRate": 10
+					"frameRate": 2
 				},
 				"walk": {
 					"frames": [2, 3, 4, 5, 6, 7],
