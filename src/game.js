@@ -54,12 +54,12 @@ function create()
 
     monster = new Boo.Monster({family: 'brute', x:3, y:5});
     world.addMonster(monster);
-
+    
     //game.world.scale.setTo(2, 2);
     //game.camera.scale.setTo(2,2);
 }
 
-function update()
+function processInput()
 {
   if (cursors.left.isDown) {
     world.player.send({command:'move', x:-1, y:0});
@@ -73,12 +73,17 @@ function update()
   else if (cursors.down.isDown) {
     world.player.send({command:'move', x:0, y:1});
   }
-  else {
-  	world.player.send({command: null});
+  else if (game.input.keyboard.isDown(Phaser.Keyboard.A))
+  {
+    world.player.send({command:'attack'}); 
   }
 
   //if (game.input.keyboard.lastKey) console.log(game.input.keyboard.lastKey.keyCode);
+}
 
+function update()
+{
+  processInput();
   world.update();
 }
 

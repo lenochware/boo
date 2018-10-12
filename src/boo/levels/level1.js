@@ -23,7 +23,7 @@ Boo.levels.level1 = {
 			"height": 29,			
 			"animations": {
 				"walk": {
-					"frames": [4, 5, 6, 7],
+					"frames": [2, 3, 4, 5, 6, 7],
 					"frameRate": 10
 				}
 			}
@@ -37,7 +37,7 @@ Boo.levels.level1 = {
 			"health": 10,
 			"attack": 1
 		},
-		
+
 		"warrior": {
 			"sprite": "warrior",
 			"name": "You",
