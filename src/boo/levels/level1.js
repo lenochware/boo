@@ -9,22 +9,48 @@ Boo.levels.level1 = {
 		"brute": {
 			"image": "assets/sprites/brute_big.png",
 			"width": 24,
-			"height": 32,			
+			"height": 32,
+
 			"animations": {
+				"idle": {
+					"frames": [0, 0, 0, 1, 0, 0, 1, 1],
+					"frameRate": 10
+				},
 				"walk": {
 					"frames": [4, 5, 6, 7],
+					"frameRate": 12
+				},
+				"attack": {
+					"frames": [2, 3, 0],
 					"frameRate": 10
+				},				
+				"die": {
+					"frames": [8, 9, 10],
+					"frameRate": 8
 				}
 			}
 		},
 		"warrior": {
 			"image": "assets/sprites/warrior_big.png",
 			"width": 24,
-			"height": 29,			
+			"height": 29,
+
 			"animations": {
+				"idle": {
+					"frames": [0, 0, 0, 1, 0, 0, 1, 1],
+					"frameRate": 10
+				},
 				"walk": {
 					"frames": [2, 3, 4, 5, 6, 7],
+					"frameRate": 12
+				},
+				"attack": {
+					"frames": [13, 14, 15, 0],
 					"frameRate": 10
+				},				
+				"die": {
+					"frames": [8, 9, 10, 11, 12, 11],
+					"frameRate": 8
 				}
 			}
 		}

@@ -85,6 +85,7 @@ Boo.Creature = class
 			//var paused = this.sprite.animations.currentAnim? this.sprite.animations.currentAnim.isPlaying : null;
 			if (this.sprite.animations.currentAnim.isPlaying) {
 				this.sprite.animations.stop();
+				this.sprite.animations.currentAnim.frame = 0;
 				//console.log('stop ');
 			}
 			return;
