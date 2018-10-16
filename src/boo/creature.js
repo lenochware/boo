@@ -59,7 +59,7 @@ Boo.Creature = class
 	    this.sprite = game.add.sprite(0, 0, name);
 			this.setPosition(x, y);
 			_.each(currentLevel.sprites[name].animations,
-				(anim,key) => this.sprite.animations.add(key, anim.frames, anim.frameRate, true)
+				(anim,key) => this.sprite.animations.add(key, anim.frames, anim.frameRate, anim.loop)
 			);
 		}
 
@@ -79,7 +79,6 @@ Boo.Creature = class
 	_move()
 	{
 		if (this.state == 'moving') {
-			this.sprite.animations.play('walk');
 
 			var STEP = 4;
 
@@ -92,19 +91,15 @@ Boo.Creature = class
 			if (dy > 0) this.sprite.y -= STEP;
 			else if (dy < 0) this.sprite.y += STEP;
 		}
-		else {
-			var anim = this.sprite.animations.currentAnim;
-			if (anim.name != 'idle' && anim.isPlaying) {
-				// this.sprite.animations.stop();
-				// this.sprite.animations.currentAnim.frame = 0;
-				game.time.events.add(game.rnd.between(100, 1000), () => this.sprite.animations.play('idle'));
-			}
-			return;
-		}
 
 	}
 
 	onNextTurn() {}
+
+	idle() {
+		this.state = 'idle';
+		game.time.events.add(game.rnd.between(100, 1000), () => this.sprite.animations.play('idle'));
+	}
 
 	attack(enemy)
 	{
@@ -122,6 +117,7 @@ Boo.Creature = class
 
 	death()
 	{
+		this.sprite.animations.play('die');
 		console.log(this.params.name + " is death.");
 	}
 
@@ -140,11 +136,12 @@ Boo.Creature = class
 
   update()
 	{
-		if (this.state == 'moving' && this._isMoveFinished()) this.state = 'idle';
+		if (this.state == 'moving' && this._isMoveFinished()) this.idle();
 
 		if (this.command.command == 'move' && this.state == 'idle') {
 			if (this.canPass(this._position.x + this.command.x, this._position.y + this.command.y)) {
 				this.state = 'moving';
+				this.sprite.animations.play('walk');
 				this.setPosition(this._position.x + this.command.x, this._position.y + this.command.y, false);
 				this.onNextTurn();
 			}
@@ -156,8 +153,9 @@ Boo.Creature = class
 		if (this.command.command == 'attack' &&  this.state == 'idle' && this.canReach(this.target)) {
 			this.state = 'attacking';
 			this.attack(this.target);
+			this.sprite.animations.play('attack').onComplete.addOnce(()=>this.idle());
+			// this.sprite.animations.currentAnim.onComplete.addOnce(() => this.state = 'idle')
 			this.onNextTurn();
-			game.time.events.add(500, () => this.state = 'idle');
 		}
 
 		this._move();
