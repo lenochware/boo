@@ -56,7 +56,10 @@ Boo.Creature = class
 	setSprite(name, x, y)
 	{
 		if (!this.sprite) {
-	    this.sprite = game.add.sprite(0, 0, name);
+	    //this.sprite = game.add.sprite(0, 0, name);
+	    this.sprite = new Phaser.Sprite(game, 0, 0, name);
+	    game.add.existing(this.sprite);
+
 			this.setPosition(x, y);
 			_.each(currentLevel.sprites[name].animations,
 				(anim,key) => this.sprite.animations.add(key, anim.frames, anim.frameRate, anim.loop)
@@ -98,6 +101,7 @@ Boo.Creature = class
 
 	idle() {
 		this.state = 'idle';
+		//this.sprite.animations.paused = true;
 		game.time.events.add(game.rnd.between(100, 1000), () => this.sprite.animations.play('idle'));
 	}
 
@@ -153,10 +157,14 @@ Boo.Creature = class
 		if (this.command.command == 'attack' &&  this.state == 'idle' && this.canReach(this.target)) {
 			this.state = 'attacking';
 			this.attack(this.target);
-			this.sprite.animations.play('attack').onComplete.addOnce(()=>this.idle());
-			// this.sprite.animations.currentAnim.onComplete.addOnce(() => this.state = 'idle')
+			//this.sprite.animations.play('attack').onComplete.addOnce(()=>this.idle());
+			this.sprite.animations.play('attack').onComplete.addOnce(()=>this.state = 'idle');
 			this.onNextTurn();
 		}
+
+		// if (this.sprite.animations.currentAnim.isFinished) {
+		// 	console.log(this.sprite.animations.currentAnim.name + ' finished');
+		// }
 
 		this._move();
 		this.send({command: null});
