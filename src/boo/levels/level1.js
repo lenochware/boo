@@ -17,6 +17,10 @@ Boo.levels.level1 = {
 					"frameRate": 2,
 					"loop": true
 				},
+				"search": {
+					"frames": [0, 0, 1, 1],
+					"frameRate": 15,
+				},				
 				"walk": {
 					"frames": [4, 5, 6, 7],
 					"frameRate": 12
@@ -42,6 +46,10 @@ Boo.levels.level1 = {
 					"frameRate": 2,
 					"loop": true
 				},
+				"search": {
+					"frames": [0, 0, 1, 1],
+					"frameRate": 15,
+				},				
 				"walk": {
 					"frames": [2, 3, 4, 5, 6, 7],
 					"frameRate": 25,

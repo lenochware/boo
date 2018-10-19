@@ -73,9 +73,9 @@ function processInput()
   else if (cursors.down.isDown) {
     world.player.do('walk', 0, 1);
   }
-  else if (game.input.keyboard.isDown(Phaser.Keyboard.A))
+  else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
   {
-    world.player.do('attack');
+    world.player.do('search');
   }
 
   //if (game.input.keyboard.lastKey) console.log(game.input.keyboard.lastKey.keyCode);

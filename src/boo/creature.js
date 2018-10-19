@@ -38,8 +38,8 @@ Boo.Creature = class
 		}
 
 		this.target.damage({"monster": this, "strength": 1});
-		if (this.target.isDestroyed()) this.target = null;
 		console.log("Attacked " + this.target.params.name);
+		if (this.target.isDestroyed()) this.target = null;
 	}
 
 	damage(attack)
@@ -81,6 +81,11 @@ Boo.Creature = class
 		}
 
 		this.setPosition(this._position.x + move[0], this._position.y + move[1], false);
+	}
+
+	search()
+	{
+		console.log('Searching...');
 	}
 
 	idle() {}
