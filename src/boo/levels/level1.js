@@ -44,7 +44,7 @@ Boo.levels.level1 = {
 				},
 				"walk": {
 					"frames": [2, 3, 4, 5, 6, 7],
-					"frameRate": 12,
+					"frameRate": 25,
 					"loop": true
 				},
 				"attack": {

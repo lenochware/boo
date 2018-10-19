@@ -25,7 +25,7 @@ Boo.Creature = class
 		action.args = Array.prototype.slice.call(arguments, 1); 
 		action.anim = actionName;
 		action.time = 10;
-		action.isBlocking = true;
+		action.isBlocking = (actionName != 'walk');
 
 		this.action = action;
 	}
@@ -79,14 +79,16 @@ Boo.Creature = class
 
   update()
 	{
-		if (!this.action || this.action.state == 'done') return;
+		if (!this.action || this.action.state == 'done') {
+			this.sprite.animations.play('idle');
+			return;
+		}
 
 		if (this.action.name == 'walk') {
 			if (this.action.state == 'new') {
 				this.sprite.animations.play(this.action.anim);
 				this.action.callback.apply(this, this.action.args);
 				this.action.state = 'ongoing';
-				return;
 			}
 
 			if (this.action.state == 'ongoing') {
