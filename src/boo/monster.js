@@ -2,8 +2,8 @@ var Boo = Boo || {};
 
 Boo.Monster = class extends Boo.Creature
 {
-	live()
+	next()
 	{
-		this.send({command: 'move', x:game.rnd.between(-1,1), y:game.rnd.between(-1,1)});
+		this.do('walk', game.rnd.between(-1,1), game.rnd.between(-1,1));
 	}
 }

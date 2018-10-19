@@ -7,16 +7,110 @@ Boo.Creature = class
 		this.params = _.extend(currentLevel.monsters[params.family], params);
 		this.sprite = null;
 		this.target = null;
-		this._visible = false;
-		this.state = 'idle';
 		this._position = {};
-		this.command = {command: null};
+		this.time = 0;
+		this.action = {name: 'idle', state: 'done'};
 	}
 
-	send(command)
+	do(actionName)
 	{
-		this.command = command || {command: null};
-		//if (!this.command.hasOwnProperty(myProp))
+		if (this.action && this.action.state != 'done') return;
+		if (!this[actionName]) throw `Action '${actionName}' does not exists.`;
+		
+		var action = {};
+		action.name = actionName;
+		action.state = "new";
+		action.prev = this.action.name;
+		action.callback = this[actionName];
+		action.args = Array.prototype.slice.call(arguments, 1); 
+		action.anim = actionName;
+		action.time = 10;
+		action.isBlocking = true;
+
+		this.action = action;
+	}
+
+	attack()
+	{
+		if (!this.target) return;
+		this.target.damage({"monster": this, "strength": 1});
+		if (this.target.isDestroyed()) this.target = null;
+		console.log("Attacked " + this.target.params.name);
+	}
+
+	damage(attack)
+	{
+		this.params.health -= attack.strength;
+		if (this.params.health <= 0) this.die();
+		this.target = attack.monster;
+	}
+
+	die()
+	{
+		console.log(this.params.name + " is death.");
+	}
+
+	walk()
+	{
+		var move = this.action.args;
+		if (!this.canPass(this._position.x + move[0], this._position.y + move[1])) return;
+		this.setPosition(this._position.x + move[0], this._position.y + move[1], false);
+		if (move[0] < 0) this.sprite.scale.x = -1;
+		if (move[0] > 0) this.sprite.scale.x = 1;
+	}
+
+	idle() {}
+
+	next() {}
+
+	_move()
+	{
+		var STEP = 4;
+
+		var dx = this.sprite.x - this._position.worldX;
+		var dy = this.sprite.y - this._position.worldY;
+		
+		if (dx > 0) this.sprite.x -= STEP;
+		else if (dx < 0) this.sprite.x += STEP;
+
+		if (dy > 0) this.sprite.y -= STEP;
+		else if (dy < 0) this.sprite.y += STEP;
+	}
+
+  update()
+	{
+		if (!this.action || this.action.state == 'done') return;
+
+		if (this.action.name == 'walk') {
+			if (this.action.state == 'new') {
+				this.sprite.animations.play(this.action.anim);
+				this.action.callback.apply(this, this.action.args);
+				this.action.state = 'ongoing';
+				return;
+			}
+
+			if (this.action.state == 'ongoing') {
+				if (this._isMoveFinished()) {
+					this.action.state = 'done';
+					this.time += this.action.time;
+				}
+				else this._move();
+			}
+
+		}
+		else {
+			if (this.action.state == 'new') {
+				this.sprite.animations.play(this.action.anim);
+				this.action.state = 'ongoing';
+				return;
+			}
+			
+			if (this.action.state == 'ongoing' && this.sprite.animations.currentAnim.isFinished) {
+				this.action.callback.apply(this, this.action.args);
+				this.action.state = 'done';
+				this.time += this.action.time;
+			}
+		}
 	}
 
 	canPass(x,y) {
@@ -79,52 +173,6 @@ Boo.Creature = class
 		return (this.sprite.x == this._position.worldX && this.sprite.y == this._position.worldY);
 	}
 
-	_move()
-	{
-		if (this.state == 'moving') {
-
-			var STEP = 4;
-
-			var dx = this.sprite.x - this._position.worldX;
-			var dy = this.sprite.y - this._position.worldY;
-			
-			if (dx > 0) this.sprite.x -= STEP;
-			else if (dx < 0) this.sprite.x += STEP;
-
-			if (dy > 0) this.sprite.y -= STEP;
-			else if (dy < 0) this.sprite.y += STEP;
-		}
-
-	}
-
-	onNextTurn() {}
-
-	idle() {
-		this.state = 'idle';
-		//this.sprite.animations.paused = true;
-		game.time.events.add(game.rnd.between(100, 1000), () => this.sprite.animations.play('idle'));
-	}
-
-	attack(enemy)
-	{
-		enemy.wound({"monster": this, "strength": 1});
-		if (enemy.isDestroyed()) this.target = null;
-		console.log("Attacked " + enemy.params.name);
-	}
-
-	wound(attack)
-	{
-		this.params.health -= attack.strength;
-		if (this.params.health <= 0) this.death();
-		this.target = attack.monster;
-	}
-
-	death()
-	{
-		this.sprite.animations.play('die');
-		console.log(this.params.name + " is death.");
-	}
-
 	isDestroyed()
 	{
 		return (this.params.health <= 0);
@@ -137,36 +185,4 @@ Boo.Creature = class
     if (Math.abs(target._position.y - this._position.y) > 1) return false;
     return true;
 	}
-
-  update()
-	{
-		if (this.state == 'moving' && this._isMoveFinished()) this.idle();
-
-		if (this.command.command == 'move' && this.state == 'idle') {
-			if (this.canPass(this._position.x + this.command.x, this._position.y + this.command.y)) {
-				this.state = 'moving';
-				this.sprite.animations.play('walk');
-				this.setPosition(this._position.x + this.command.x, this._position.y + this.command.y, false);
-				this.onNextTurn();
-			}
-
-			if (this.command.x < 0) this.sprite.scale.x = -1;
-			if (this.command.x > 0) this.sprite.scale.x = 1;
-		}
-
-		if (this.command.command == 'attack' &&  this.state == 'idle' && this.canReach(this.target)) {
-			this.state = 'attacking';
-			this.attack(this.target);
-			//this.sprite.animations.play('attack').onComplete.addOnce(()=>this.idle());
-			this.sprite.animations.play('attack').onComplete.addOnce(()=>this.state = 'idle');
-			this.onNextTurn();
-		}
-
-		// if (this.sprite.animations.currentAnim.isFinished) {
-		// 	console.log(this.sprite.animations.currentAnim.name + ' finished');
-		// }
-
-		this._move();
-		this.send({command: null});
-	}	
 }

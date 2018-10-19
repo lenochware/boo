@@ -28,17 +28,16 @@ Boo.World = class
 
 	update()
 	{
+		var now = this.player.time;
+
 		for (var i = 0; i < this.monsters.length; i++) {
-  		this.monsters[i].update();
+			var m = this.monsters[i];
+			if (m.action.state == 'done' && m.time < now) m.next();
+			m.update();
+			if (m.action.state != 'done' && m.action.isBlocking) return;
 		}
 
   	this.player.update();
 	}
 
-	nextTurn()
-	{
-		for (var i = 0; i < this.monsters.length; i++) {
-  		this.monsters[i].live();
-		}
-	}
 }

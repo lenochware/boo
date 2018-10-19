@@ -62,20 +62,20 @@ function create()
 function processInput()
 {
   if (cursors.left.isDown) {
-    world.player.send({command:'move', x:-1, y:0});
+    world.player.do('walk', -1, 0);
   }
   else if (cursors.right.isDown) {
-    world.player.send({command:'move', x:1, y:0});
+    world.player.do('walk', 1, 0);
   }
   else if (cursors.up.isDown) {
-    world.player.send({command:'move', x:0, y:-1});
+    world.player.do('walk', 0, -1);
   }
   else if (cursors.down.isDown) {
-    world.player.send({command:'move', x:0, y:1});
+    world.player.do('walk', 0, 1);
   }
   else if (game.input.keyboard.isDown(Phaser.Keyboard.A))
   {
-    world.player.send({command:'attack'}); 
+    world.player.do('attack');
   }
 
   //if (game.input.keyboard.lastKey) console.log(game.input.keyboard.lastKey.keyCode);
