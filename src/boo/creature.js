@@ -53,10 +53,16 @@ Boo.Creature = class
 	walk()
 	{
 		var move = this.action.args;
-		if (!this.canPass(this._position.x + move[0], this._position.y + move[1])) return;
-		this.setPosition(this._position.x + move[0], this._position.y + move[1], false);
+
 		if (move[0] < 0) this.sprite.scale.x = -1;
 		if (move[0] > 0) this.sprite.scale.x = 1;
+
+		if (!this.canPass(this._position.x + move[0], this._position.y + move[1])) {
+			this.action.state = 'done';
+			return;
+		}
+
+		this.setPosition(this._position.x + move[0], this._position.y + move[1], false);
 	}
 
 	idle() {}
@@ -87,8 +93,8 @@ Boo.Creature = class
 		if (this.action.name == 'walk') {
 			if (this.action.state == 'new') {
 				this.sprite.animations.play(this.action.anim);
-				this.action.callback.apply(this, this.action.args);
 				this.action.state = 'ongoing';
+				this.action.callback.apply(this, this.action.args);
 			}
 
 			if (this.action.state == 'ongoing') {
