@@ -26,6 +26,14 @@ Boo.World = class
 		this.monsters.push(m);
 	}
 
+	getTileProp(x, y)
+	{
+		var tile = world.map.getTile(x, y);
+		var prop = tile.properties || {};
+		prop.wall = (tile.index == 17);
+		return prop;
+	}
+
 	update()
 	{
 		var now = this.player.time;

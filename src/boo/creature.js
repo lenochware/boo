@@ -32,7 +32,11 @@ Boo.Creature = class
 
 	attack()
 	{
-		if (!this.target) return;
+		if (!this.target || !this.canReach(this.target)) {
+			console.log('Cannot reach target.');
+			return;
+		}
+
 		this.target.damage({"monster": this, "strength": 1});
 		if (this.target.isDestroyed()) this.target = null;
 		console.log("Attacked " + this.target.params.name);
@@ -54,11 +58,25 @@ Boo.Creature = class
 	{
 		var move = this.action.args;
 
+		if (move[0] == 0 && move[1] == 0) {
+			this.action.state = 'done';
+			return;			
+		}
+
 		if (move[0] < 0) this.sprite.scale.x = -1;
 		if (move[0] > 0) this.sprite.scale.x = 1;
 
 		if (!this.canPass(this._position.x + move[0], this._position.y + move[1])) {
 			this.action.state = 'done';
+
+			var tile = world.getTileProp(this._position.x + move[0], this._position.y + move[1])
+
+			if (tile.monster)
+			{
+				this.target = tile.monster;
+				this.do('attack');
+			}
+
 			return;
 		}
 
@@ -122,17 +140,9 @@ Boo.Creature = class
 	}
 
 	canPass(x,y) {
-		var tile = world.map.getTile(x, y);
-		if (tile.properties && tile.properties.monster) {
-
-			//Attack anything which you hit to. TODO: Better logic not in canPass.
-			this.target = tile.properties.monster; 
-			tile.properties.monster.target = this;
-
-			return false;
-		}
-
-		return world.map.getTile(x, y).index != 17;
+		var tile = world.getTileProp(x, y);
+		if (tile.monster) return false;
+		return !tile.wall;
 	}
 
 	setPosition(x, y, setSprite = true)
