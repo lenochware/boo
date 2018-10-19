@@ -79,7 +79,7 @@ Boo.levels.level1 = {
 			"sprite": "warrior",
 			"name": "You",
 			"health": 10,
-			"attack": 1
+			"attack": 5
 		}
 	}
 }

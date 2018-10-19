@@ -26,6 +26,22 @@ Boo.World = class
 		this.monsters.push(m);
 	}
 
+	removeMonster(m)
+	{
+		m.sprite.destroy();
+		m.sprite = null;
+
+		var tile = this.map.getTile(m._position.x, m._position.y);
+		tile.properties.monster = null;
+
+		for (var i = 0; i < this.monsters.length; i++) {
+			if (this.monsters[i] == m) {
+				this.monsters[i] = null;
+				break;
+			}
+		}
+	}
+
 	getTileProp(x, y)
 	{
 		var tile = world.map.getTile(x, y);
@@ -40,6 +56,7 @@ Boo.World = class
 
 		for (var i = 0; i < this.monsters.length; i++) {
 			var m = this.monsters[i];
+			if (!m) continue;
 			if (m.action.state == 'done' && m.time < now) m.next();
 			m.update();
 			if (m.action.state != 'done' && m.action.isBlocking) return;
