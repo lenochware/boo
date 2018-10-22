@@ -54,6 +54,10 @@ function create()
 
     monster = new Boo.Monster({family: 'brute', x:3, y:5});
     world.addMonster(monster);
+
+
+    var toolbar = new Boo.ui.Toolbar();
+    toolbar.add();
     
     //game.world.scale.setTo(2, 2);
     //game.camera.scale.setTo(2,2);
