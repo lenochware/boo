@@ -44,6 +44,7 @@ Boo.Creature = class
 
 	damage(attack)
 	{
+		//this.sprite.tint = 0xff0000;
 		this.params.health -= attack.strength;
 		this.target = attack.monster;
 		if (this.params.health <= 0) this.do('die');
