@@ -71,7 +71,7 @@ Boo.ui.WindowManager = class {
          ));
     }
 
-    message(m, cssClass = 'message')
+    message(m, cssClass = 'msg')
     {
     	$(this.messages).append(`<span class="${cssClass}">${m}</span>`);
     }

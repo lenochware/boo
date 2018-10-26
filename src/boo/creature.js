@@ -38,7 +38,14 @@ Boo.Creature = class
 		}
 
 		this.target.damage({"monster": this, "strength": this.params.attack});
-		wm.message("Attacked " + this.target.params.name + this.target.params.health);
+
+		if (this.isPlayer()) {
+			wm.message(`You hit ${this.target.params.name}.`);
+		}
+		else {
+			wm.message(this.params.name + " hits you.");
+		}
+
 		if (this.target.isDestroyed()) this.target = null;
 	}
 
@@ -52,8 +59,14 @@ Boo.Creature = class
 
 	die()
 	{
+		if (this.isPlayer()) {
+			wm.message("You die.", "msg msg-negative");
+		}
+		else {
+			wm.message(`You defeated ${this.params.name}.`);
+		}
+
 		this.params.health = 0;
-		wm.message(this.params.name + " is death.");
 		world.removeMonster(this);
 	}
 
@@ -202,6 +215,11 @@ Boo.Creature = class
 	isDestroyed()
 	{
 		return (this.params.health <= 0);
+	}
+
+	isPlayer()
+	{
+		return false;
 	}
 
 	canReach(target)
