@@ -74,6 +74,7 @@ Boo.ui.WindowManager = class {
     message(m, cssClass = 'msg')
     {
     	$(this.messages).append(`<span class="${cssClass}">${m}</span>`);
+    	this.messages.scrollTop = this.messages.scrollHeight;
     }
 
     toolbar()

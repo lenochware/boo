@@ -161,9 +161,10 @@ body {
 .ui-messages {
 	position: absolute;
 	bottom: 55px;
-	height: 3em;
+	height: 58px;
 	pointer-events: none;
 	background-color: rgba(0,0,0,0.2);
+	overflow: hidden;
 
 	font-weight: bold;
 	font-size: 18px;
