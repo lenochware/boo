@@ -10,6 +10,7 @@ body {
 }
 
 #game-container {
+	position: relative;
 	margin: auto;
 	width: 800px;
 }
@@ -139,4 +140,13 @@ body {
 	height: 32px;
 	background-image: url(assets/ui/items_big.png);
 	cursor: pointer;
+}
+
+.ui-messages {
+	position: absolute;
+	bottom: 55px;
+	height: 3em;
+	pointer-events: none;
+	background-color: red;
+	opacity: 0.5;
 }

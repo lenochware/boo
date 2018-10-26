@@ -6,8 +6,13 @@ Boo.ui.WindowManager = class {
 
     constructor()
     {
+    	this.messages = document.createElement('div');
+    	$(this.messages).addClass('ui-messages')
+    	.width(game.width)
+    	.appendTo('#'+game.parent);
+
   	  this.footer = document.createElement('div');
-      $(this.footer).addClass("footer")
+      $(this.footer).addClass("ui-footer")
       .width(game.width)
       .appendTo('#'+game.parent);
     }
@@ -64,6 +69,11 @@ Boo.ui.WindowManager = class {
          .click(()=>this.popup(null, "Some item", "This is an description of some item", 
              [{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Test'}]
          ));
+    }
+
+    message(m, cssClass = 'message')
+    {
+    	$(this.messages).append(`<span class="${cssClass}">${m}</span>`);
     }
 
     toolbar()

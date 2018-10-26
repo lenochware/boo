@@ -38,7 +38,7 @@ Boo.Creature = class
 		}
 
 		this.target.damage({"monster": this, "strength": this.params.attack});
-		console.log("Attacked " + this.target.params.name + this.target.params.health);
+		wm.message("Attacked " + this.target.params.name + this.target.params.health);
 		if (this.target.isDestroyed()) this.target = null;
 	}
 
@@ -53,7 +53,7 @@ Boo.Creature = class
 	die()
 	{
 		this.params.health = 0;
-		console.log(this.params.name + " is death.");
+		wm.message(this.params.name + " is death.");
 		world.removeMonster(this);
 	}
 
@@ -88,7 +88,7 @@ Boo.Creature = class
 
 	search()
 	{
-		console.log('Searching...');
+		wm.message('Searching...');
 	}
 
 	idle() {}
