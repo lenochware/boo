@@ -9,6 +9,11 @@ body {
   color: #fff;
 }
 
+#game-container {
+	margin: auto;
+	width: 800px;
+}
+
 .ui {
 	background-color: white;
 	color:black;

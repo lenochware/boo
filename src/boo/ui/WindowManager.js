@@ -6,16 +6,17 @@ Boo.ui.WindowManager = class {
 
     constructor()
     {
-        this.templates = {};
-        this.afterLoad = _.noop;
+  	  this.footer = document.createElement('div');
+      $(this.footer).addClass("footer")
+      .width(game.width)
+      .appendTo('#'+game.parent);
     }
 
     load()
     {
-        var d1 = $.get("templates/popup.html", (data) => this.templates.popup = data);
-        var d2 = $.get("templates/inventory.html", (data) => this.templates.inventory = data);        
-        var d3 = $.get("templates/toolbar.html", (data) => this.templates.toolbar = data);
-        $.when(d1, d2, d3).done(this.afterLoad)
+    	game.load.text('templates/popup', 'assets/ui/templates/popup.html');
+    	game.load.text('templates/inventory', 'assets/ui/templates/inventory.html');
+    	game.load.text('templates/toolbar', 'assets/ui/templates/toolbar.html');
     }
 
     window(id, width, height, content)
@@ -24,7 +25,7 @@ Boo.ui.WindowManager = class {
       $(over).addClass("ui-overlay")
       .click(() => this.closeWindow(id))
       .attr("id", id + "-overlay")
-      .appendTo($("#container"));
+      .appendTo('#'+game.parent);
 
       var d = document.createElement('div');
       $(d).addClass("ui-window")
@@ -32,12 +33,12 @@ Boo.ui.WindowManager = class {
       .width(width)
       .height(height)
       .html(content)
-      .appendTo($("#container")).fadeIn(200);
+      .appendTo('#'+game.parent).show();//fadeIn(200);
     }
 
     template(id, data)
     {
-        return _.template(this.templates[id])(data);
+        return _.template(game.cache.getText('templates/'+id))(data);
     }
 
     closeWindow(id)
@@ -65,9 +66,11 @@ Boo.ui.WindowManager = class {
          ));
     }
 
-    toolbar(id)
+    toolbar()
     {
-        $('#' + id).html(this.template('toolbar'));
+	      $(this.footer)
+	      .html(this.template('toolbar'))
+	      .appendTo('#'+game.parent);
         $("#ui-toolbar .ui-button").click(toolbar_click);
     }
 }

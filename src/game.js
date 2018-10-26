@@ -1,14 +1,16 @@
 
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas-div', { preload: preload, create: create, update: update, render: render }, false, false/*antialias*/);
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game-container', { preload: preload, create: create, update: update, render: render }, false, false/*antialias*/);
 
 var cursors;
 var layer;
 var marker;
 var currentLevel = null;
 
+var wm = new Boo.ui.WindowManager;
 var world = new Boo.World;
 
 function preload() {
+    wm.load();
     loadLevel(Boo.levels.level1);
 }
 
@@ -34,6 +36,7 @@ function create()
     //game.time.advancedTiming = true;
    // game.renderer.renderSession.roundPixels = true;
    //game.forceSingleUpdate = true;
+    //game.scale.pageAlignHorizontally = true;
 
    var tile = world.map.getTile(3,3);
    tile.properties.test = 'test';
@@ -55,9 +58,7 @@ function create()
     monster = new Boo.Monster({family: 'brute', x:3, y:5});
     world.addMonster(monster);
 
-
-    var toolbar = new Boo.ui.Toolbar();
-    toolbar.add();
+    wm.toolbar();
     
     //game.world.scale.setTo(2, 2);
     //game.camera.scale.setTo(2,2);
@@ -96,6 +97,11 @@ function render()
    // game.debug.body(sprite);
   //game.debug.text('sprite', 32, 32);
   //game.debug.spriteInfo(world.player.sprite, 32, 32);
+}
+
+function toolbar_click(e)
+{
+    wm.inventory();
 }
 
 

@@ -11,7 +11,7 @@
         {scripts_html}
     </head>
     <body>
-        <div id="canvas-div"></div>
+        <div id="game-container"></div>
         {links_html}
         <script type="text/javascript" src="{game}"></script>
         <script>
