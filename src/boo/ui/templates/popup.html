@@ -1,0 +1,15 @@
+<h1>
+	<% if (icon) { %><img src="<%=icon%>"><%}%>
+	<%=title%>
+</h1>
+
+<p><%=desc%></p>
+<div class="ui-buttons">
+
+<%_.forEach(buttons, function (b) {%>
+
+<button type="button" onclick="<%=b.onclick%>"><%=b.label%></button>
+
+<%})%>
+
+</div>
