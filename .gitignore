@@ -3,4 +3,7 @@
 /_etc/*
 /lib/*
 /assets/*
+!/assets/ui
+/assets/ui/*
+!/assets/ui/templates
 *.bak
