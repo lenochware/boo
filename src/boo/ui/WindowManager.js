@@ -1,6 +1,5 @@
 var Boo = Boo || {};
-
-Boo.ui = {};
+Boo.ui = Boo.ui || {};
 
 Boo.ui.WindowManager = class {
 

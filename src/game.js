@@ -1,12 +1,12 @@
 
 var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game-container', { preload: preload, create: create, update: update, render: render }, false, false/*antialias*/);
 
-var cursors;
 var layer;
 var marker;
 var currentLevel = null;
 
 var wm = new Boo.ui.WindowManager;
+var input = new Boo.ui.InputManager;
 var world = new Boo.World;
 
 function preload() {
@@ -43,10 +43,8 @@ function create()
 
     //  Create our tile selector at the top of the screen
     createTileSelector();
-    game.input.addMoveCallback(updateMarker, this);
+    //game.input.addMoveCallback(updateMarker, this);
 
-
-    cursors = game.input.keyboard.createCursorKeys();
 
     var player = new Boo.Player({family: 'warrior', x:2, y:2});
     
@@ -59,37 +57,18 @@ function create()
     world.addMonster(monster);
 
     wm.toolbar();
-    
+    input.init();
+
     //game.world.scale.setTo(2, 2);
     //game.camera.scale.setTo(2,2);
 }
 
-function processInput()
-{
-  if (cursors.left.isDown) {
-    world.player.do('walk', -1, 0);
-  }
-  else if (cursors.right.isDown) {
-    world.player.do('walk', 1, 0);
-  }
-  else if (cursors.up.isDown) {
-    world.player.do('walk', 0, -1);
-  }
-  else if (cursors.down.isDown) {
-    world.player.do('walk', 0, 1);
-  }
-  else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
-  {
-    world.player.do('search');
-  }
-
-  //if (game.input.keyboard.lastKey) console.log(game.input.keyboard.lastKey.keyCode);
-}
-
 function update()
 {
-  processInput();
+  input.process();
   world.update();
+  // game.camera.y +=4;
+  // console.log(game.camera.y);
 }
 
 function render()
@@ -117,11 +96,11 @@ function updateMarker() {
     marker.x = layer.getTileX(game.input.activePointer.worldX) * world.map.tileWidth;
     marker.y = layer.getTileY(game.input.activePointer.worldY) * world.map.tileHeight;
 
-    if (game.input.mousePointer.isDown)
-    {
-      console.log(world.map.getTile(layer.getTileX(marker.x), layer.getTileY(marker.y)));
-      //world.map.putTile(/*currentTile*/0, layer.getTileX(marker.x), layer.getTileY(marker.y), layer);
-        // map.fill(currentTile, layer.getTileX(marker.x), layer.getTileY(marker.y), 4, 4, layer);
-    }
+    // if (game.input.mousePointer.isDown)
+    // {
+    //   console.log(world.map.getTile(layer.getTileX(marker.x), layer.getTileY(marker.y)));
+    //   //world.map.putTile(/*currentTile*/0, layer.getTileX(marker.x), layer.getTileY(marker.y), layer);
+    //     // map.fill(currentTile, layer.getTileX(marker.x), layer.getTileY(marker.y), 4, 4, layer);
+    // }
 
 }
