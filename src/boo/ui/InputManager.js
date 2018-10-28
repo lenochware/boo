@@ -6,6 +6,7 @@ Boo.ui.InputManager = class {
   constructor()
   {
     this.cursors = null;
+    this.dragPoint = new Phaser.Point;
   }
 
   init()
@@ -24,16 +25,16 @@ Boo.ui.InputManager = class {
   processKeys()
   {
     if (this.cursors.left.isDown) {
-      world.player.do('walk', -1, 0);
+      world.player.do('walk', [-1, 0]);
     }
     else if (this.cursors.right.isDown) {
-      world.player.do('walk', 1, 0);
+      world.player.do('walk', [1, 0]);
     }
     else if (this.cursors.up.isDown) {
-      world.player.do('walk', 0, -1);
+      world.player.do('walk', [0, -1]);
     }
     else if (this.cursors.down.isDown) {
-      world.player.do('walk', 0, 1);
+      world.player.do('walk', [0, 1]);
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
     {
@@ -45,11 +46,16 @@ Boo.ui.InputManager = class {
   
   onMove(pointer, x, y, click)
   {
-    if (pointer.middleButton.isDown) {
-      game.camera.x = x;
-      game.camera.y = y;
+    if (click) {
+      game.camera.unfollow();
+      this.dragPoint.set(game.camera.x + x, game.camera.y + y);
     }
-   // console.log(click);
+
+    if (pointer.middleButton.isDown) {
+      game.camera.x = this.dragPoint.x - x;
+      game.camera.y = this.dragPoint.y - y;
+    }
+
     updateMarker();
   }  
 
