@@ -13,35 +13,39 @@ Boo.ui.InputManager = class {
   {
     this.cursors = game.input.keyboard.createCursorKeys();
     //game.input.mouse.onMouseMove =  this.onMouseMove; 
-    game.input.addMoveCallback(this.onMove, this);  
+    game.input.addMoveCallback(this.onMove, this);
+
+    document.addEventListener('keydown', this.processKeys);
+    //$(window).keydown(this.processKeys);
   }
 
   process()
   {
-    this.processKeys();
+//    this.processKeys();
 //    this.processMouse();
   }
 
-  processKeys()
+  processKeys(e)
   {
-    if (this.cursors.left.isDown) {
-      world.player.do('walk', [-1, 0]);
-    }
-    else if (this.cursors.right.isDown) {
-      world.player.do('walk', [1, 0]);
-    }
-    else if (this.cursors.up.isDown) {
-      world.player.do('walk', [0, -1]);
-    }
-    else if (this.cursors.down.isDown) {
-      world.player.do('walk', [0, 1]);
-    }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.S))
+    switch (e.code)
     {
-      world.player.do('search');
-    }
+      case 'ArrowLeft': world.player.do('walk', [-1, 0]); break;
+      case 'ArrowRight': world.player.do('walk', [1, 0]); break;
+      case 'ArrowUp': world.player.do('walk', [0, -1]);  break;
+      case 'ArrowDown': world.player.do('walk', [0, 1]); break;
+      case 'Numpad4': world.player.do('walk', [-1, 0]);  break;
+      case 'Numpad6': world.player.do('walk', [1, 0]);   break;
+      case 'Numpad8': world.player.do('walk', [0, -1]);  break;
+      case 'Numpad2': world.player.do('walk', [0, 1]);   break;
+      case 'Numpad7': world.player.do('walk', [-1, -1]); break;
+      case 'Numpad9': world.player.do('walk', [1, -1]);  break;
+      case 'Numpad1': world.player.do('walk', [-1, 1]);  break;
+      case 'Numpad3': world.player.do('walk', [1, 1]);   break;
 
-    //if (game.input.keyboard.lastKey) console.log(game.input.keyboard.lastKey.keyCode);
+      case 'KeyS':
+        world.player.do('search');
+        break;
+    }
   }
   
   onMove(pointer, x, y, click)
