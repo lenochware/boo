@@ -4,7 +4,7 @@ Boo.Creature = class
 {
 	constructor(params)
 	{
-		this.params = _.extend(currentLevel.monsters[params.family], params);
+		this.params = _.extend(world.currentLevel.monsters[params.family], params);
 		this.sprite = null;
 		this.target = null;
 		this._position = {};
@@ -194,7 +194,7 @@ Boo.Creature = class
 	    game.add.existing(this.sprite);
 
 			this.setPosition(x, y);
-			_.each(currentLevel.sprites[name].animations,
+			_.each(world.currentLevel.sprites[name].animations,
 				(anim,key) => this.sprite.animations.add(key, anim.frames, anim.frameRate, anim.loop)
 			);
 		}

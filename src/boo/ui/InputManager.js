@@ -60,7 +60,7 @@ Boo.ui.InputManager = class {
       game.camera.y = this.dragPoint.y - y;
     }
 
-    updateMarker();
+    wm.updateMarker();
   }  
 
   processMouse()

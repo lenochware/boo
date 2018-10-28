@@ -5,6 +5,8 @@ Boo.ui.WindowManager = class {
 
     constructor()
     {
+      this.marker = null;
+
     	this.messages = document.createElement('div');
     	$(this.messages).addClass('ui-messages')
     	.width(game.width)
@@ -21,6 +23,12 @@ Boo.ui.WindowManager = class {
     	game.load.text('templates/popup', 'assets/ui/templates/popup.html');
     	game.load.text('templates/inventory', 'assets/ui/templates/inventory.html');
     	game.load.text('templates/toolbar', 'assets/ui/templates/toolbar.html');
+    }
+
+    init()
+    {
+      this.createTileSelector();
+      this.toolbar();
     }
 
     window(id, width, height, content)
@@ -81,6 +89,30 @@ Boo.ui.WindowManager = class {
 	      $(this.footer)
 	      .html(this.template('toolbar'))
 	      .appendTo('#'+game.parent);
-        $("#ui-toolbar .ui-button").click(toolbar_click);
+        $("#ui-toolbar .ui-button").click(this.inventory.bind(this));
     }
+
+    createTileSelector()
+    {
+        //  Our painting marker
+        this.marker = game.add.graphics();
+        this.marker.lineStyle(2, 0x00ff00, 1);
+        this.marker.drawRect(0, 0, world.map.tileWidth, world.map.tileHeight);
+    }    
+
+    updateMarker()
+    {
+        var tile = world.map.getTileWorldXY(game.input.activePointer.worldX, game.input.activePointer.worldY);
+        if (!tile) return;
+
+        this.marker.x = tile.x * world.map.tileWidth;
+        this.marker.y = tile.y * world.map.tileHeight;
+
+        // if (game.input.mousePointer.isDown)
+        // {
+        //   console.log(tile);
+        //   //world.map.putTile(/*currentTile*/0, layer.getTileX(marker.x), layer.getTileY(marker.y), layer);
+        //     // map.fill(currentTile, layer.getTileX(marker.x), layer.getTileY(marker.y), 4, 4, layer);
+        // }
+    }    
 }

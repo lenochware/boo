@@ -6,12 +6,15 @@ Boo.World = class
     this.monsters = [];
     this.player = null;
     this.map = null;
+    this.currentLevel = null;
   }
 
-  // getTile(tileX, tileY)
-  // {
-  // 	console.log(this.map.getTileWorldXY(x, y))
-  // }
+	loadLevel(level) {
+	  game.load.tilemap('map', level.map, null, Phaser.Tilemap.TILED_JSON);
+	  game.load.image('tiles1', level.tiles);
+	  _.each(level.sprites, (sprite,key) => game.load.spritesheet(key, sprite.image, sprite.width, sprite.height));
+	  this.currentLevel = level;
+	}
 
 	setPlayer(player)
 	{
