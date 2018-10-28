@@ -12,7 +12,7 @@ Boo.Creature = class
 		this.action = {name: 'idle', state: 'done'};
 	}
 
-	do(actionName)
+	do(actionName, args)
 	{
 		if (this.action && this.action.state != 'done') return;
 		if (!this[actionName]) throw `Action '${actionName}' does not exists.`;
@@ -22,7 +22,7 @@ Boo.Creature = class
 		action.state = "new";
 		action.prev = this.action.name;
 		action.callback = this[actionName];
-		action.args = Array.prototype.slice.call(arguments, 1); 
+		action.args = args;
 		action.anim = actionName;
 		action.time = 10;
 		action.isBlocking = (actionName != 'walk');
