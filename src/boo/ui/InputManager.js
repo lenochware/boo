@@ -21,6 +21,7 @@ Boo.ui.InputManager = class {
   onKeyDown(e)
   {    
     this.currentKey = e;
+    e.preventDefault();
   }
 
   onKeyUp(e)

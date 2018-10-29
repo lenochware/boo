@@ -3,7 +3,10 @@ Boo.levels = {};
 
 Boo.levels.level1 = {
 	"map": "assets/tilemaps/maps/test_level.json",
-	"tiles": "assets/tilemaps/tiles/tiles1_big.png",
+	"tilesets": {
+		"tiles1": "assets/tilemaps/tiles/tiles1_big.png",
+		"items": "assets/tilemaps/tiles/items_big.png"
+	},
 
 	"sprites": {
 		"brute": {

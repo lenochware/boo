@@ -11,7 +11,7 @@ Boo.World = class
 
 	loadLevel(level) {
 	  game.load.tilemap('map', level.map, null, Phaser.Tilemap.TILED_JSON);
-	  game.load.image('tiles1', level.tiles);
+	  _.each(level.tilesets, (file,key) => game.load.image(key, file));
 	  _.each(level.sprites, (sprite,key) => game.load.spritesheet(key, sprite.image, sprite.width, sprite.height));
 	  this.currentLevel = level;
 	}

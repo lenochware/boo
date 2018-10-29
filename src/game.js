@@ -13,21 +13,16 @@ function preload() {
 function create()
 {
     world.map = game.add.tilemap('map');
-    world.map.addTilesetImage('tiles1');
+    _.each(world.currentLevel.tilesets, (file,key) =>  world.map.addTilesetImage(key));
     world.map.createLayer('floor').resizeWorld();
+    world.map.createLayer('items');
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    //game.time.advancedTiming = true;
-   // game.renderer.renderSession.roundPixels = true;
-   //game.forceSingleUpdate = true;
-    //game.scale.pageAlignHorizontally = true;
+    // items = game.add.group();
+    // world.map.createFromObjects('items', 69/*gid*/, 'spritekey', 0, true, false, items);
 
-   var tile = world.map.getTile(3,3);
-   tile.properties.test = 'test';
-
-    //  Create our tile selector at the top of the screen
-    //game.input.addMoveCallback(updateMarker, this);
-
+     // var tile = world.map.getTile(3,3);
+     // tile.properties.test = 'test';
 
     var player = new Boo.Player({family: 'warrior', x:2, y:2});
     
@@ -41,22 +36,17 @@ function create()
 
     input.init();
     wm.init();
-
-    //game.world.scale.setTo(2, 2);
-    //game.camera.scale.setTo(2,2);
 }
 
 function update()
 {
   input.process();
   world.update();
-  // game.camera.y +=4;
-  // console.log(game.camera.y);
 }
 
 function render()
 {
-   // game.debug.body(sprite);
+  // game.debug.body(sprite);
   //game.debug.text('sprite', 32, 32);
   //game.debug.spriteInfo(world.player.sprite, 32, 32);
 }
