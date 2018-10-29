@@ -48,7 +48,7 @@ function create()
 
 function update()
 {
-  //input.process();
+  input.process();
   world.update();
   // game.camera.y +=4;
   // console.log(game.camera.y);

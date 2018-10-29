@@ -5,29 +5,41 @@ Boo.ui.InputManager = class {
 
   constructor()
   {
-    this.cursors = null;
+    this.currentKey = null;
     this.dragPoint = new Phaser.Point;
   }
 
   init()
   {
-    this.cursors = game.input.keyboard.createCursorKeys();
     //game.input.mouse.onMouseMove =  this.onMouseMove; 
     game.input.addMoveCallback(this.onMove, this);
 
-    document.addEventListener('keydown', this.processKeys);
-    //$(window).keydown(this.processKeys);
+    document.addEventListener('keydown', this.onKeyDown.bind(this));
+    document.addEventListener('keyup', this.onKeyUp.bind(this));
   }
+
+  onKeyDown(e)
+  {    
+    this.currentKey = e;
+  }
+
+  onKeyUp(e)
+  {
+    this.currentKey = null;
+  }
+
 
   process()
   {
-//    this.processKeys();
+    this.processKeys();
 //    this.processMouse();
   }
 
-  processKeys(e)
+  processKeys()
   {
-    switch (e.code)
+    if (!this.currentKey) return;
+
+    switch (this.currentKey.code)
     {
       case 'ArrowLeft': world.player.do('walk', [-1, 0]); break;
       case 'ArrowRight': world.player.do('walk', [1, 0]); break;
