@@ -50,6 +50,15 @@ Boo.World = class
 		return new Boo.WorldPos(x, y);
 	}
 
+  getTileset(tileIndex) {
+    for (var i = 0; i < this.map.tilesets.length; i++) {
+      var ts = this.map.tilesets[i];
+      if (ts.containsTileIndex(tileIndex)) {
+        return ts;
+      }
+    }
+  }
+
 	update()
 	{
 		var now = this.player.time;
