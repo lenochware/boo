@@ -85,11 +85,11 @@ Boo.Creature = class
 		if (!this.canPass(this._position.x + move[0], this._position.y + move[1])) {
 			this.action.state = 'done';
 
-			var tile = world.getTileProp(this._position.x + move[0], this._position.y + move[1])
+			var pos = world.getPos(this._position.x + move[0], this._position.y + move[1])
 
-			if (tile.monster)
+			if (pos.monster)
 			{
-				this.target = tile.monster;
+				this.target = pos.monster;
 				this.do('attack');
 			}
 
@@ -140,6 +140,7 @@ Boo.Creature = class
 				if (this._isMoveFinished()) {
 					this.action.state = 'done';
 					this.time += this.action.time;
+					this.onStep();
 				}
 				else this._move();
 			}
@@ -160,10 +161,12 @@ Boo.Creature = class
 		}
 	}
 
+	onStep() {}
+
 	canPass(x,y) {
-		var tile = world.getTileProp(x, y);
-		if (tile.monster) return false;
-		return !tile.wall;
+		var pos = world.getPos(x, y);
+		if (pos.monster) return false;
+		return pos.family != 'wall';
 	}
 
 	setPosition(x, y, setSprite = true)

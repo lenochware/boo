@@ -108,11 +108,9 @@ Boo.ui.WindowManager = class {
         this.marker.x = tile.x * world.map.tileWidth;
         this.marker.y = tile.y * world.map.tileHeight;
 
-        // if (game.input.mousePointer.isDown)
-        // {
-        //   console.log(tile);
-        //   //world.map.putTile(/*currentTile*/0, layer.getTileX(marker.x), layer.getTileY(marker.y), layer);
-        //     // map.fill(currentTile, layer.getTileX(marker.x), layer.getTileY(marker.y), 4, 4, layer);
-        // }
+        if (game.input.mousePointer.isDown)
+        {
+          console.log(world.getPos(tile.x,tile.y));
+        }
     }    
 }

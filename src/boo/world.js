@@ -45,12 +45,9 @@ Boo.World = class
 		}
 	}
 
-	getTileProp(x, y)
+	getPos(x, y)
 	{
-		var tile = world.map.getTile(x, y);
-		var prop = tile.properties || {};
-		prop.wall = (tile.index == 17);
-		return prop;
+		return new Boo.WorldPos(x, y);
 	}
 
 	update()
