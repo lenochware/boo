@@ -7,7 +7,7 @@ Boo.Item = class
   	var item = new Boo.Item;
     item.tileIndex = tileIndex;
     var ts = world.getTileset(tileIndex);
-    item.id = ts.name + '.' + (tileIndex - ts.firstgid);
+    item.id = tileIndex - ts.firstgid;
     return item;
   }
 }

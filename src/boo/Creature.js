@@ -43,7 +43,7 @@ Boo.Creature = class
 			wm.message(`You hit ${this.target.params.name}.`);
 		}
 		else {
-			wm.message(this.params.name + " hits " + this.target.params.name);
+			wm.message(this.params.name + " hits " + this.target.params.name + ".");
 		}
 
 		if (this.target.isDestroyed()) this.target = null;

@@ -43,7 +43,7 @@ Boo.Player = class extends Boo.Creature
 		if (!item) return;
 
 		if (this.inventoryPut(item)) {
-			wm.message("You have " + item.id);
+			wm.message(`You have ${item.id}.`);
 		}
 		else {
 			wm.message("You have no room in inventory.");
