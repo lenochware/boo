@@ -232,4 +232,10 @@ Boo.Creature = class
     if (Math.abs(target._position.y - this._position.y) > 1) return false;
     return true;
 	}
+
+	getPos()
+	{
+		return world.getPos(this._position.x, this._position.y);
+	}
+
 }

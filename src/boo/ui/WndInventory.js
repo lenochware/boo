@@ -3,34 +3,40 @@ Boo.ui = Boo.ui || {};
 
 Boo.ui.WndInventory = class {
 
-  constructor(wm)
+  constructor(wm, owner)
   {
   	this.wm = wm;
+  	this.owner = owner;
   }
 
 	open()
 	{
 		this.wm.window('inventory', 250, 340, wm.template('inventory'));
-		this.fillItems(world.player.inventory);
+		this.fillItems(this.owner.inventory);
 	}
 
 	fillItems(items)
 	{
-		_.each(items, this.setItem);
+		_.each(items, this.setItem, this);
 	}
 
 	setItem(item, index)
 	{
 	   var icon = document.createElement('div');
-	   var iconX = -(item.id % 8) * 32;
-	   var iconY = -Math.floor(item.id / 8) * 32;
 
 	   $(icon).addClass('ui-item')
-	   .css('background-position',iconX+'px '+iconY+'px')
+	   .css('background-position',`${-item.icon.x}px ${-item.icon.y}px`)
 	   .appendTo("#in"+ (index + 1))
-	   .click(()=>this.wm.popup(null, "Some item", "This is an description of some item", 
-	       [{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Test'}]
+	   .click(()=>this.wm.popup(null, item.name(), item.shortDesc(), 
+	       [{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Drop', onclick: "this.drop("+index+")"}]
 	   ));
+	}
+
+	drop(index)
+	{
+		this.owner.inventoryDrop(index);
+		wm.closeWindow('popup');
+		wm.closeWindow('inventory');
 	}
 
 }

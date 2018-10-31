@@ -37,8 +37,20 @@ Boo.Player = class extends Boo.Creature
 		return removed[0];
 	}
 
+	inventoryDrop(index)
+	{
+		var item = this.inventoryGet(index);
+		if (!item) return;
+		var pos = this.getPos();
+		var ok = pos.putItem(item);
+		if (!ok) {
+			wm.message("There is no room.");
+			this.inventoryPut(item);
+		}
+	}
+
 	onStep() {
-		var pos = world.getPos(this._position.x, this._position.y);
+		var pos = this.getPos();
 		var item = pos.getItem();
 		if (!item) return;
 

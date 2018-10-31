@@ -68,7 +68,7 @@ Boo.ui.WindowManager = class {
 
     inventory()
     {
-      var wnd = new Boo.ui.WndInventory(this);
+      var wnd = new Boo.ui.WndInventory(this, world.player);
       wnd.open();
     }
 
