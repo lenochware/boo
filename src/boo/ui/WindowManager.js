@@ -68,14 +68,8 @@ Boo.ui.WindowManager = class {
 
     inventory()
     {
-        this.window('inventory', 250, 340, this.template('inventory'));
-         var item = document.createElement('div');
-         $(item).addClass('ui-item')
-         .css('background-position','-64px 0px')
-         .appendTo("#in1")
-         .click(()=>this.popup(null, "Some item", "This is an description of some item", 
-             [{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Test'}]
-         ));
+      var wnd = new Boo.ui.WndInventory(this);
+      wnd.open();
     }
 
     message(m, cssClass = 'msg')
