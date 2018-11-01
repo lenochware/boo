@@ -6,6 +6,7 @@ Boo.ui.WindowManager = class {
     constructor()
     {
       this.marker = null;
+      this.inventory = null;
 
     	this.messages = document.createElement('div');
     	$(this.messages).addClass('ui-messages')
@@ -28,6 +29,7 @@ Boo.ui.WindowManager = class {
     init()
     {
       this.createTileSelector();
+      this.inventory = new Boo.ui.WndInventory(this, world.player);
       this.toolbar();
     }
 
@@ -66,12 +68,6 @@ Boo.ui.WindowManager = class {
         );
     }
 
-    inventory()
-    {
-      var wnd = new Boo.ui.WndInventory(this, world.player);
-      wnd.open();
-    }
-
     message(m, cssClass = 'msg')
     {
     	$(this.messages).append(`<span class="${cssClass}">${m}</span>`);
@@ -83,7 +79,7 @@ Boo.ui.WindowManager = class {
 	      $(this.footer)
 	      .html(this.template('toolbar'))
 	      .appendTo('#'+game.parent);
-        $("#ui-toolbar .ui-button").click(this.inventory.bind(this));
+        $("#ui-toolbar .ui-button").click(() => wm.inventory.open());
     }
 
     createTileSelector()

@@ -28,7 +28,7 @@ Boo.ui.WndInventory = class {
 	   .css('background-position',`${-item.icon.x}px ${-item.icon.y}px`)
 	   .appendTo("#in"+ (index + 1))
 	   .click(()=>this.wm.popup(null, item.name(), item.shortDesc(), 
-	       [{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Drop', onclick: "this.drop("+index+")"}]
+	       [{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Drop', onclick: "wm.inventory.drop("+index+")"}]
 	   ));
 	}
 
