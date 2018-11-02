@@ -12,17 +12,8 @@ function preload() {
 
 function create()
 {
-    world.map = game.add.tilemap('map');
-    _.each(world.currentLevel.tilesets, (file,key) =>  world.map.addTilesetImage(key));
-    world.map.createLayer('floor').resizeWorld();
-    world.map.createLayer('items');
+    world.create();
     game.physics.startSystem(Phaser.Physics.ARCADE);
-
-    // items = game.add.group();
-    // world.map.createFromObjects('items', 69/*gid*/, 'spritekey', 0, true, false, items);
-
-     // var tile = world.map.getTile(3,3);
-     // tile.properties.test = 'test';
 
     var player = new Boo.Player({family: 'warrior', x:2, y:2});
     

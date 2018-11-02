@@ -4,8 +4,17 @@ Boo.levels = {};
 Boo.levels.level1 = {
 	"map": "assets/tilemaps/maps/test_level.json",
 	"tilesets": {
-		"tiles1": "assets/tilemaps/tiles/tiles1_big.png",
-		"items": "assets/tilemaps/tiles/items_big.png"
+		"tiles1": {
+			"image": "assets/tilemaps/tiles/tiles1_big.png",
+		},
+		
+		"items": {
+			"image": "assets/tilemaps/tiles/items_big.png",
+			"tiles": [
+				"bones", "ankh", "short_sword", "staff", "food", "?", "?", "?",
+				"brass_key", "silver_key", "gold_key", "chest", "chest_locked", "tombstone", "gold", "ninja_star"
+			]
+		}
 	},
 
 	"sprites": {
@@ -72,17 +81,39 @@ Boo.levels.level1 = {
 
 	"monsters": {
 		"brute": {
+			"tags": ["monster", "brute", "slow"],
 			"sprite": "brute",
-			"name": "Brute",
 			"health": 10,
-			"attack": 1
+			"attack": 1,
+			"name": "gnoll brute",
+			"desc": "Brutes are the largest, strongest and toughest of all gnolls. When severely wounded, they go berserk, inflicting even more damage to their enemies."
 		},
 
 		"warrior": {
 			"sprite": "warrior",
-			"name": "You",
 			"health": 10,
-			"attack": 5
+			"attack": 5,
+			"name": "you",
+			"desc": "Warriors start with 11 points of Strength."
+		}
+	},
+
+	"items": {
+		"bones": {
+			"name": "bones",
+			"desc": "Who left his bones in this sad place?"
+		},
+		"short_sword": {
+			"name": "short sword",
+			"desc": "It is indeed quite short, just a few inches longer than a dagger."
+		},
+		"gold": {
+			"name": "gold",
+			"desc": "A pile of %d gold coins."
+		},
+		"food": {
+			"name": "ration of food",
+			"desc": "Nothing fancy here: dried meat, some biscuits - things like that."
 		}
 	}
 }
