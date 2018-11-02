@@ -3,20 +3,25 @@
 $template = [];
 $template['game'] = $_GET['script'] ?: 'src/game.js';
 
-foreach (rglob("src/boo/*.js") as $path) {
-    $template['scripts'][]['path'] = $path;
-}
+// foreach (rglob("src/boo/*.js") as $path) {
+//     $template['scripts'][]['path'] = $path;
+// }
 
-foreach (glob("src/game*.js") as $path) {
-    $template['links'][]['path'] = $path;
-}
 
-$template['links_html'] = paramStr("<a href=\"index.php?script={path}\">{path}</a><br>", $template['links']);
-$template['scripts_html'] = paramStr("<script type=\"text/javascript\" src=\"{path}\"></script>\n", $template['scripts']);
 
+$template['scripts'] = scripts(file('build.txt'));
 print paramStr(file_get_contents('index.tpl'), $template);
 die();
 
+
+function scripts($files)
+{
+    $html = '';
+    foreach ($files as $file) {
+        $html .= "<script type=\"text/javascript\" src=\"".trim($file)."\"></script>\n";
+    }
+    return $html;
+}
 
 function paramStr($str, $param, $keepEmpty = false)
 {

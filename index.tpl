@@ -8,16 +8,10 @@
         <script src="lib/underscore.1.9.1.min.js" type="text/javascript"></script>
         <script src="lib/jquery.1.12.4.min.js" type="text/javascript"></script>
         <script src="lib/phaser.2.6.2.min.js" type="text/javascript"></script>
-        {scripts_html}
+        {scripts}
     </head>
     <body>
         <div id="game-container"></div>
-        {links_html}
         <script type="text/javascript" src="{game}"></script>
-        <script>
-            window.onload = function() {
-                //document.querySelector("#canvas-div canvas").focus();
-            }
-        </script>
     </body>
 </html>

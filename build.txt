@@ -1,0 +1,11 @@
+src/boo/Entity.js
+src/boo/Creature.js
+src/boo/Item.js
+src/boo/Monster.js
+src/boo/Player.js
+src/boo/World.js
+src/boo/WorldPos.js
+src/boo/levels/level1.js
+src/boo/ui/InputManager.js
+src/boo/ui/WindowManager.js
+src/boo/ui/WndInventory.js
