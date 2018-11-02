@@ -1,9 +1,10 @@
 var Boo = Boo || {};
 
-Boo.Creature = class
+Boo.Creature = class extends Boo.Entity
 {
 	constructor(params)
 	{
+		super()
 		this.params = _.extend(world.currentLevel.monsters[params.family], params);
 		this.sprite = null;
 		this.target = null;

@@ -1,6 +1,6 @@
 var Boo = Boo || {};
 
-Boo.Item = class
+Boo.Item = class extends Boo.Entity
 {
   static fromTile(tileIndex)
   {
@@ -11,23 +11,6 @@ Boo.Item = class
     item.icon = new Phaser.Point((item.index % 8) * 32, Math.floor(item.index / 8) * 32);
     item.id = world.currentLevel.tilesets.items.tiles[item.index];
     return item;
-  }
-
-  getProperty(propId)
-  {
-    var prop = world.currentLevel.items[this.id][propId];
-    if (!prop) throw `Missing property ${this.id+'.'+propId}.`;
-    return prop; 
-  }
-
-  name()
-  {
-  	return this.getProperty("name");
-  }
-
-  shortDesc()
-  {
-  	return this.getProperty("desc");
   }
 
   actions()
