@@ -2,9 +2,14 @@ var Boo = Boo || {};
 
 Boo.Item = class extends Boo.Entity
 {
+  constructor(id)
+  {
+    super(id, 'items');
+  }
+
   static fromTile(tileIndex)
   {
-  	var item = new Boo.Item;
+  	var item = new Boo.Item('nothing');
     item.tileIndex = tileIndex;
     var ts = world.getTileset(tileIndex);
     item.index = tileIndex - ts.firstgid;

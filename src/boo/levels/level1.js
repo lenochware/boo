@@ -99,6 +99,10 @@ Boo.levels.level1 = {
 	},
 
 	"items": {
+		"nothing": {
+			"name": "nothing",
+			"desc": "Nothing."
+		},
 		"bones": {
 			"name": "bones",
 			"desc": "Who left his bones in this sad place?"

@@ -15,15 +15,15 @@ function create()
     world.create();
     game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    var player = new Boo.Player({family: 'warrior', x:2, y:2});
+    var player = new Boo.Player('warrior');
     
-    world.setPlayer(player);
+    world.setPlayer(player, 2, 2);
 
-    var monster = new Boo.Monster({family: 'brute', x:3, y:4});
-    world.addMonster(monster);
+    var monster = new Boo.Monster('brute');
+    world.addMonster(monster, 3, 4);
 
-    monster = new Boo.Monster({family: 'brute', x:3, y:5});
-    world.addMonster(monster);
+    monster = new Boo.Monster('brute');
+    world.addMonster(monster, 3, 5);
 
     input.init();
     wm.init();

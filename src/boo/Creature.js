@@ -2,10 +2,9 @@ var Boo = Boo || {};
 
 Boo.Creature = class extends Boo.Entity
 {
-	constructor(params)
+	constructor(id)
 	{
-		super()
-		this.params = _.extend(world.currentLevel.monsters[params.family], params);
+		super(id, 'monsters');
 		this.sprite = null;
 		this.target = null;
 		this._position = {};
@@ -38,13 +37,13 @@ Boo.Creature = class extends Boo.Entity
 			return;
 		}
 
-		this.target.damage({"monster": this, "strength": this.params.attack});
+		this.target.damage({"monster": this, "strength": this.getProperty('attack')});
 
 		if (this.isPlayer()) {
-			wm.message(`You hit ${this.target.params.name}.`);
+			wm.message(`You hit ${this.target.name()}.`);
 		}
 		else {
-			wm.message(this.params.name + " hits " + this.target.params.name + ".");
+			wm.message(this.name() + " hits " + this.target.name() + ".");
 		}
 
 		if (this.target.isDestroyed()) this.target = null;
@@ -53,9 +52,9 @@ Boo.Creature = class extends Boo.Entity
 	damage(attack)
 	{
 		//this.sprite.tint = 0xff0000;
-		this.params.health -= attack.strength;
+		this.health -= attack.strength;
 		this.target = attack.monster;
-		if (this.params.health <= 0) this.do('die');
+		if (this.health <= 0) this.do('die');
 	}
 
 	die()
@@ -64,10 +63,10 @@ Boo.Creature = class extends Boo.Entity
 			wm.message("You die.", "msg msg-negative");
 		}
 		else {
-			wm.message(`You defeated ${this.params.name}.`);
+			wm.message(`You defeated ${this.name()}.`);
 		}
 
-		this.params.health = 0;
+		this.health = 0;
 		world.removeMonster(this);
 	}
 
@@ -218,7 +217,7 @@ Boo.Creature = class extends Boo.Entity
 
 	isDestroyed()
 	{
-		return (this.params.health <= 0);
+		return (this.health <= 0);
 	}
 
 	isPlayer()

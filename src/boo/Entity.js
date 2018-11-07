@@ -2,16 +2,23 @@ var Boo = Boo || {};
 
 Boo.Entity = class
 {
-  constructor()
+  constructor(id, category)
   {
-    this.PROPERTY_PATH = 'items';
+    this.id = id;
+    this.category = category;
+    this.health = this.getProperty('health') || 10;
   }
 
   getProperty(propId)
   {
-    var prop = world.currentLevel[this.PROPERTY_PATH][this.id][propId];
-    if (!prop) throw `Missing property ${this.id+'.'+propId}.`;
-    return prop; 
+    try {
+      var prop = world.currentLevel[this.category][this.id][propId];
+    }
+    catch(err) {
+      throw `Missing property "${this.category+': '+this.id+'.'+propId}".`;
+    }
+    
+    return prop;
   }
 
   is(tag)

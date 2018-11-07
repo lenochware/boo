@@ -24,16 +24,16 @@ Boo.World = class
     this.map.createLayer('items');		
 	}
 
-	setPlayer(player)
+	setPlayer(player, x, y)
 	{
-		player.setSprite(player.params.family, player.params.x, player.params.y);
+		player.setSprite(player.id, x, y);
 		this.player = player;
 		game.camera.follow(player.sprite, null, 0.1, 0.1);
 	}
 
-	addMonster(m)
+	addMonster(m, x, y)
 	{
-		m.setSprite(m.params.family, m.params.x, m.params.y);
+		m.setSprite(m.id, x, y);
 		this.monsters.push(m);
 	}
 

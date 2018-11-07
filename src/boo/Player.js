@@ -2,9 +2,9 @@ var Boo = Boo || {};
 
 Boo.Player = class extends Boo.Creature
 {
-	constructor(params)
+	constructor(id)
 	{
-		super(params);
+		super(id);
 		this.inventory = [];
 		this.maxInventory = 20;
 	}
