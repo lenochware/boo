@@ -6,38 +6,38 @@ var input = new Boo.ui.InputManager;
 var world = new Boo.World;
 
 function preload() {
-    wm.load();
-    world.loadLevel(Boo.levels.level1);
+	wm.load();
+	world.loadLevel(Boo.levels.level1);
 }
 
 function create()
 {
-    world.create();
-    game.physics.startSystem(Phaser.Physics.ARCADE);
+	world.create();
+	game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    var player = new Boo.Player('warrior');
-    
-    world.setPlayer(player, 2, 2);
+	var player = new Boo.Player('warrior');
+	
+	world.setPlayer(player, 2, 2);
 
-    var monster = new Boo.Monster('brute');
-    world.addMonster(monster, 3, 4);
+	var monster = new Boo.Monster('brute');
+	world.addMonster(monster, 3, 4);
 
-    monster = new Boo.Monster('brute');
-    world.addMonster(monster, 3, 5);
+	monster = new Boo.Monster('brute');
+	world.addMonster(monster, 3, 5);
 
-    input.init();
-    wm.init();
+	input.init();
+	wm.init();
 }
 
 function update()
 {
-  input.process();
-  world.update();
+	input.process();
+	world.update();
 }
 
 function render()
 {
-  // game.debug.body(sprite);
-  //game.debug.text('sprite', 32, 32);
-  //game.debug.spriteInfo(world.player.sprite, 32, 32);
+	// game.debug.body(sprite);
+	//game.debug.text('sprite', 32, 32);
+	//game.debug.spriteInfo(world.player.sprite, 32, 32);
 }

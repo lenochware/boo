@@ -122,7 +122,7 @@ Boo.Creature = class extends Boo.Entity
 		else if (dy < 0) this.sprite.y += STEP;
 	}
 
-  update()
+	update()
 	{
 		if (!this.action || this.action.state == 'done') {
 			this.sprite.animations.play('idle');
@@ -192,9 +192,9 @@ Boo.Creature = class extends Boo.Entity
 	setSprite(name, x, y)
 	{
 		if (!this.sprite) {
-	    //this.sprite = game.add.sprite(0, 0, name);
-	    this.sprite = new Phaser.Sprite(game, 0, 0, name);
-	    game.add.existing(this.sprite);
+			//this.sprite = game.add.sprite(0, 0, name);
+			this.sprite = new Phaser.Sprite(game, 0, 0, name);
+			game.add.existing(this.sprite);
 
 			this.setPosition(x, y);
 			_.each(world.currentLevel.sprites[name].animations,
@@ -202,12 +202,12 @@ Boo.Creature = class extends Boo.Entity
 			);
 		}
 
-    this.sprite.anchor.set(0.5);
+		this.sprite.anchor.set(0.5);
 
-    game.physics.arcade.enable(this.sprite);
-    this.sprite.body.setSize(16, 16, 0, 0);
-    //this.sprite.scale.setTo(2);
-    //sprite.body.collideWorldBounds = true;
+		game.physics.arcade.enable(this.sprite);
+		this.sprite.body.setSize(16, 16, 0, 0);
+		//this.sprite.scale.setTo(2);
+		//sprite.body.collideWorldBounds = true;
 	}
 
 	_isMoveFinished()
@@ -227,15 +227,14 @@ Boo.Creature = class extends Boo.Entity
 
 	canReach(target)
 	{
-    if (!target) return false;
-    if (Math.abs(target._position.x - this._position.x) > 1) return false;
-    if (Math.abs(target._position.y - this._position.y) > 1) return false;
-    return true;
+		if (!target) return false;
+		if (Math.abs(target._position.x - this._position.x) > 1) return false;
+		if (Math.abs(target._position.y - this._position.y) > 1) return false;
+		return true;
 	}
 
 	getPos()
 	{
 		return world.getPos(this._position.x, this._position.y);
 	}
-
 }

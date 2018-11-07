@@ -17,7 +17,7 @@ Boo.Player = class extends Boo.Creature
 	do(actionName, args)
 	{
 		if (game.camera.target == null) {
-			 game.camera.follow(this.sprite, null, 0.1, 0.1);
+			game.camera.follow(this.sprite, null, 0.1, 0.1);
 		}
 
 		super.do(actionName, args);

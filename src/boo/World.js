@@ -2,26 +2,28 @@ var Boo = Boo || {};
 
 Boo.World = class
 {
-	constructor() {
-    this.monsters = [];
-    this.player = null;
-    this.map = null;
-    this.currentLevel = null;
-  }
+	constructor()
+	{
+		this.monsters = [];
+		this.player = null;
+		this.map = null;
+		this.currentLevel = null;
+	}
 
-	loadLevel(level) {
-	  game.load.tilemap('map', level.map, null, Phaser.Tilemap.TILED_JSON);
-	  _.each(level.tilesets, (tileset,key) => game.load.image(key, tileset.image));
-	  _.each(level.sprites, (sprite,key) => game.load.spritesheet(key, sprite.image, sprite.width, sprite.height));
-	  this.currentLevel = level;
+	loadLevel(level)
+	{
+		game.load.tilemap('map', level.map, null, Phaser.Tilemap.TILED_JSON);
+		_.each(level.tilesets, (tileset,key) => game.load.image(key, tileset.image));
+		_.each(level.sprites, (sprite,key) => game.load.spritesheet(key, sprite.image, sprite.width, sprite.height));
+		this.currentLevel = level;
 	}
 
 	create()
 	{
-    this.map = game.add.tilemap('map');
-    _.each(this.currentLevel.tilesets, (tmp,key) =>  this.map.addTilesetImage(key));
-    this.map.createLayer('floor').resizeWorld();
-    this.map.createLayer('items');		
+		this.map = game.add.tilemap('map');
+		_.each(this.currentLevel.tilesets, (tmp,key) =>  this.map.addTilesetImage(key));
+		this.map.createLayer('floor').resizeWorld();
+		this.map.createLayer('items');		
 	}
 
 	setPlayer(player, x, y)
@@ -58,14 +60,14 @@ Boo.World = class
 		return new Boo.WorldPos(x, y);
 	}
 
-  getTileset(tileIndex) {
-    for (var i = 0; i < this.map.tilesets.length; i++) {
-      var ts = this.map.tilesets[i];
-      if (ts.containsTileIndex(tileIndex)) {
-        return ts;
-      }
-    }
-  }
+	getTileset(tileIndex) {
+		for (var i = 0; i < this.map.tilesets.length; i++) {
+			var ts = this.map.tilesets[i];
+			if (ts.containsTileIndex(tileIndex)) {
+				return ts;
+			}
+		}
+	}
 
 	update()
 	{
@@ -79,7 +81,6 @@ Boo.World = class
 			if (m.action.state != 'done' && m.action.isBlocking) return;
 		}
 
-  	this.player.update();
+		this.player.update();
 	}
-
 }

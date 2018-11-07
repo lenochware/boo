@@ -1,13 +1,13 @@
 var Boo = Boo || {};
 Boo.ui = Boo.ui || {};
 
-Boo.ui.WndInventory = class {
-
-  constructor(wm, owner)
-  {
-  	this.wm = wm;
-  	this.owner = owner;
-  }
+Boo.ui.WndInventory = class
+{
+	constructor(wm, owner)
+	{
+		this.wm = wm;
+		this.owner = owner;
+	}
 
 	open()
 	{
@@ -22,14 +22,14 @@ Boo.ui.WndInventory = class {
 
 	setItem(item, index)
 	{
-	   var icon = document.createElement('div');
+		var icon = document.createElement('div');
 
-	   $(icon).addClass('ui-item')
-	   .css('background-position',`${-item.icon.x}px ${-item.icon.y}px`)
-	   .appendTo("#in"+ (index + 1))
-	   .click(()=>this.wm.popup(null, item.name(), item.shortDesc(), 
-	       [{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Drop', onclick: "wm.inventory.drop("+index+")"}]
-	   ));
+		$(icon).addClass('ui-item')
+		.css('background-position',`${-item.icon.x}px ${-item.icon.y}px`)
+		.appendTo("#in"+ (index + 1))
+		.click(()=>this.wm.popup(null, item.name(), item.shortDesc(), \
+			[{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Drop', onclick: "wm.inventory.drop("+index+")"}]
+		));
 	}
 
 	drop(index)
@@ -38,5 +38,4 @@ Boo.ui.WndInventory = class {
 		wm.closeWindow('popup');
 		wm.closeWindow('inventory');
 	}
-
 }

@@ -1,12 +1,12 @@
 @import url(http://fonts.googleapis.com/css?family=Geo&subset=latin);
 
 body {
-  margin: 0px;
-  padding: 0px;
-  font-family: 'Geo', sans-serif;
-  font-size: 16px;
-  background-color: #000000;
-  color: #fff;
+	margin: 0px;
+	padding: 0px;
+	font-family: 'Geo', sans-serif;
+	font-size: 16px;
+	background-color: #000000;
+	color: #fff;
 }
 
 #game-container {
@@ -21,15 +21,15 @@ body {
 }
 
 .pull-right {
-  float: right !important;
+	float: right !important;
 }
 
 .ui.inline {
-  display: inline-block;
+	display: inline-block;
 }
 
 .ui-button {
-  display: inline-block;
+	display: inline-block;
 	width: 40px;
 	height: 50px;
 	background: #be8c60;
@@ -67,13 +67,13 @@ body {
 }
 
 .ui-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #000;
-  opacity: 0.1;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #000;
+	opacity: 0.1;
 }
 
 .ui-window {
@@ -85,13 +85,13 @@ body {
 	right: 0;
 	top: 0;
 	bottom: 0;
-  padding: 8px;
-  display: none;
-  box-shadow:4px 4px 4px 0px rgba(0, 0, 0, 0.5);	
+	padding: 8px;
+	display: none;
+	box-shadow:4px 4px 4px 0px rgba(0, 0, 0, 0.5);	
 	border: 15px solid transparent;
 	border-image: url(assets/ui/border.png) 40% stretch;
-  background-color: #3b3e36;
-  color: white;
+	background-color: #3b3e36;
+	color: white;
 }
 
 .ui-window button {
@@ -105,10 +105,10 @@ body {
 	font-weight: bold;
 	font-size: 18px;
 	 text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;  
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;  
 	cursor:pointer;
 	margin-right: 10px;
 }
@@ -169,8 +169,8 @@ body {
 	font-weight: bold;
 	font-size: 18px;
 	text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;  
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;  
 }
