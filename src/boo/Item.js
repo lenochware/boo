@@ -7,7 +7,7 @@ Boo.Item = class extends Boo.Entity
 		super(id, 'items');
 	}
 
-	static fromTile(tileIndex)
+	static createFromTile(tileIndex)
 	{
 		var item = new Boo.Item('nothing');
 		item.tileIndex = tileIndex;
@@ -18,8 +18,19 @@ Boo.Item = class extends Boo.Entity
 		return item;
 	}
 
-	actions()
+	getActions()
 	{
-		return [];
+		var actions = ['drop'];
+		
+		if (this.isDestroyed()) {
+			return actions;
+		}
+
+		if (this.is('food')) actions.push('eat');
+		if (this.is('equipment')) actions.push('equip');
+		if (this.is('tool')) actions.push('use');
+		if (this.is('weapon')) actions.push('attack');
+
+		return actions;
 	}
 }

@@ -90,6 +90,7 @@ Boo.levels.level1 = {
 		},
 
 		"warrior": {
+			"tags": [],
 			"sprite": "warrior",
 			"health": 10,
 			"attack": 5,
@@ -100,22 +101,27 @@ Boo.levels.level1 = {
 
 	"items": {
 		"nothing": {
+			"tags": ["useless"],
 			"name": "nothing",
 			"desc": "Nothing."
 		},
 		"bones": {
+			"tags": ["useless"],
 			"name": "bones",
 			"desc": "Who left his bones in this sad place?"
 		},
 		"short_sword": {
+			"tags": ["equipment", "weapon"],
 			"name": "short sword",
 			"desc": "It is indeed quite short, just a few inches longer than a dagger."
 		},
 		"gold": {
+			"tags": ["money"],
 			"name": "gold",
 			"desc": "A pile of %d gold coins."
 		},
 		"food": {
+			"tags": ["food"],
 			"name": "ration of food",
 			"desc": "Nothing fancy here: dried meat, some biscuits - things like that."
 		}

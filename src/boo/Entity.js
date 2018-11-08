@@ -35,4 +35,9 @@ Boo.Entity = class
 	{
 		return this.getProperty("desc");
 	}
+
+	isDestroyed()
+	{
+		return (this.health <= 0);
+	}
 }

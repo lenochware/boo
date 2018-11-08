@@ -20,7 +20,7 @@ Boo.WorldPos = class
 		if (!this.itemTileIndex) return null;
 		world.map.removeTile(this.x, this.y, 'items');
 
-		return Boo.Item.fromTile(this.itemTileIndex);
+		return Boo.Item.createFromTile(this.itemTileIndex);
 	}
 
 	putItem(item)

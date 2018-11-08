@@ -215,11 +215,6 @@ Boo.Creature = class extends Boo.Entity
 		return (this.sprite.x == this._position.worldX && this.sprite.y == this._position.worldY);
 	}
 
-	isDestroyed()
-	{
-		return (this.health <= 0);
-	}
-
 	isPlayer()
 	{
 		return false;
