@@ -87,9 +87,9 @@ Boo.Creature = class extends Boo.Entity
 
 			var pos = world.getPos(this._position.x + move[0], this._position.y + move[1])
 
-			if (pos.monster)
+			if (pos.getMonster())
 			{
-				this.target = pos.monster;
+				this.target = pos.getMonster();
 				this.do('attack');
 			}
 
@@ -165,8 +165,8 @@ Boo.Creature = class extends Boo.Entity
 
 	canPass(x,y) {
 		var pos = world.getPos(x, y);
-		if (pos.monster) return false;
-		return pos.family != 'wall';
+		if (pos.getMonster()) return false;
+		return !pos.is('wall');
 	}
 
 	setPosition(x, y, setSprite = true)

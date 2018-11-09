@@ -6,32 +6,42 @@ Boo.WorldPos = class
 	{
 		this.x = x;
 		this.y = y;
+	}
 
-		var floor = world.map.getTile(x, y, 'floor');
-		this.family = (floor.index == 17)? 'wall' : 'floor';
-		this.monster = floor.properties.monster;
+	getTile(layer = 'floor')
+	{
+		return world.map.getTile(this.x, this.y, layer);
+	}
 
-		var itemTile = world.map.getTile(this.x, this.y, 'items');
-		this.itemTileIndex = itemTile? itemTile.index : 0;
+	is(tag)
+	{
+		if (tag == 'wall') return (this.getTile().index == 17);
+		if (tag == 'floor') return (this.getTile().index != 17);
+		return false;
+	}
+
+	getMonster()
+	{
+		return this.getTile().properties.monster;
 	}
 
 	getItem()
 	{
-		if (!this.itemTileIndex) return null;
+		var tile = this.getTile('items');
+		if (!tile) return null;
 		world.map.removeTile(this.x, this.y, 'items');
-
-		return Boo.Item.createFromTile(this.itemTileIndex);
+		return Boo.Item.createFromTile(tile.index);
 	}
 
 	putItem(item)
 	{
-		if (this.itemTileIndex) {
+		var tile = this.getTile('items');
+		if (tile) {
 			console.log('There is no place.');
 			return false;
 		}
 
 		world.map.putTile(item.tileIndex, this.x, this.y, 'items');
-		this.itemTileIndex = item.tileIndex;
 		return true;
 	}
 }
