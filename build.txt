@@ -1,4 +1,5 @@
 src/boo/Entity.js
+src/boo/Movable.js
 src/boo/Creature.js
 src/boo/Item.js
 src/boo/Monster.js
