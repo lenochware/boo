@@ -7,28 +7,22 @@ Boo.Movable = class extends Boo.Entity
 		super(id, category);
 		this.sprite = null;
 		this.target = null;
-		this._position = {};
+		this.pos = new Boo.WorldPos();
 		this.time = 0;
 		this.action = {name: 'idle', state: 'done'};
 	}
 
 	setPosition(x, y, setSprite = true)
 	{
-		if (!_.isEmpty(this._position)) {
-			var tile = world.map.getTile(this._position.x, this._position.y);
-			tile.properties.monster = null;			
+		if (this.pos.getMonster() === this) {
+			this.pos.setMonster(null);
 		}
-		tile = world.map.getTile(x, y);
-		tile.properties.monster = this;
 
-		this._position.x = x;
-		this._position.y = y;
-		this._position.worldX = x * world.map.tileWidth + world.map.tileWidth / 2;
-		this._position.worldY = y * world.map.tileHeight + world.map.tileHeight / 2;
+		this.pos.set(x, y).setMonster(this);
 
 		if (setSprite) {
-			this.sprite.x = this._position.worldX;
-			this.sprite.y = this._position.worldY;		
+			this.sprite.x = this.pos.px;
+			this.sprite.y = this.pos.py;
 		}
 	}
 
@@ -55,15 +49,15 @@ Boo.Movable = class extends Boo.Entity
 
 	_isMoveFinished()
 	{
-		return (this.sprite.x == this._position.worldX && this.sprite.y == this._position.worldY);
+		return (this.sprite.x == this.pos.px && this.sprite.y == this.pos.py);
 	}
 
 	_move()
 	{
 		var STEP = 4;
 
-		var dx = this.sprite.x - this._position.worldX;
-		var dy = this.sprite.y - this._position.worldY;
+		var dx = this.sprite.x - this.pos.px;
+		var dy = this.sprite.y - this.pos.py;
 		
 		if (dx > 0) this.sprite.x -= STEP;
 		else if (dx < 0) this.sprite.x += STEP;
@@ -84,21 +78,21 @@ Boo.Movable = class extends Boo.Entity
 		if (move[0] < 0) this.sprite.scale.x = -1;
 		if (move[0] > 0) this.sprite.scale.x = 1;
 
-		if (!this.canPass(this._position.x + move[0], this._position.y + move[1])) {
+		var npos = this.pos.add(move[0], move[1]);
+
+		if (!this.canPass(npos)) {
 			this.action.state = 'done';
 
-			var pos = world.getPos(this._position.x + move[0], this._position.y + move[1])
-
-			if (pos.getMonster())
+			if (npos.getMonster())
 			{
-				this.target = pos.getMonster();
+				this.target = npos.getMonster();
 				this.do('attack');
 			}
 
 			return;
 		}
 
-		this.setPosition(this._position.x + move[0], this._position.y + move[1], false);
+		this.setPosition(npos.x, npos.y, false);
 	}
 
 	do(actionName, args)
@@ -158,8 +152,8 @@ Boo.Movable = class extends Boo.Entity
 		}
 	}
 
-	canPass(x,y) {
-		var pos = world.getPos(x, y);
+	canPass(pos)
+	{
 		if (pos.getMonster()) return false;
 		return !pos.is('wall');
 	}
@@ -167,14 +161,9 @@ Boo.Movable = class extends Boo.Entity
 	canReach(target)
 	{
 		if (!target) return false;
-		if (Math.abs(target._position.x - this._position.x) > 1) return false;
-		if (Math.abs(target._position.y - this._position.y) > 1) return false;
+		if (Math.abs(target.pos.x - this.pos.x) > 1) return false;
+		if (Math.abs(target.pos.y - this.pos.y) > 1) return false;
 		return true;
-	}	
-
-	getPos()
-	{
-		return world.getPos(this._position.x, this._position.y);
 	}	
 
 	onStep() {}		

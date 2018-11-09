@@ -43,9 +43,7 @@ Boo.World = class
 	{
 		m.sprite.destroy();
 		m.sprite = null;
-
-		var tile = this.map.getTile(m._position.x, m._position.y);
-		tile.properties.monster = null;
+		m.pos.setMonster(null);
 
 		for (var i = 0; i < this.monsters.length; i++) {
 			if (this.monsters[i] == m) {

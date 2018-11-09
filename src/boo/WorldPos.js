@@ -4,13 +4,33 @@ Boo.WorldPos = class
 {
 	constructor(x, y)
 	{
-		this.x = x;
-		this.y = y;
+		this.set(x, y);
 	}
 
 	getTile(layer = 'floor')
 	{
 		return world.map.getTile(this.x, this.y, layer);
+	}
+
+	set(x, y)
+	{
+		this.x = x || 0;
+		this.y = y || ( (y !== 0) ? this.x : 0 );
+
+		this.px = this.x * world.map.tileWidth + world.map.tileWidth / 2;
+		this.py = this.y * world.map.tileHeight + world.map.tileHeight / 2;
+
+		return this;
+	}
+
+	add(x, y)
+	{
+		return new Boo.WorldPos(this.x + x, this.y + y);
+	}
+
+	copyFrom(src)
+	{
+		return this.set(src.x, src.y);
 	}
 
 	is(tag)
@@ -23,6 +43,11 @@ Boo.WorldPos = class
 	getMonster()
 	{
 		return this.getTile().properties.monster;
+	}
+
+	setMonster(m)
+	{
+		this.getTile().properties.monster = m;
 	}
 
 	getItem()

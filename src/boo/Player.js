@@ -41,8 +41,7 @@ Boo.Player = class extends Boo.Creature
 	{
 		var item = this.inventoryGet(index);
 		if (!item) return;
-		var pos = this.getPos();
-		var ok = pos.putItem(item);
+		var ok = this.pos.putItem(item);
 		if (!ok) {
 			wm.message("There is no room.");
 			this.inventoryPut(item);
@@ -50,8 +49,7 @@ Boo.Player = class extends Boo.Creature
 	}
 
 	onStep() {
-		var pos = this.getPos();
-		var item = pos.getItem();
+		var item = this.pos.getItem();
 		if (!item) return;
 
 		if (this.inventoryPut(item)) {
@@ -59,7 +57,7 @@ Boo.Player = class extends Boo.Creature
 		}
 		else {
 			wm.message("You have no room in inventory.");
-			pos.putItem(item);
+			this.pos.putItem(item);
 		}
 	}
 }

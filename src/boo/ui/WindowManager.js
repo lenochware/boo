@@ -100,7 +100,7 @@ Boo.ui.WindowManager = class
 
 		if (game.input.mousePointer.isDown)
 		{
-			console.log(world.getPos(tile.x,tile.y));
+			console.log(tile.properties);
 		}
 	}
 }
