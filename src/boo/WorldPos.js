@@ -40,6 +40,14 @@ Boo.WorldPos = class
 		return false;
 	}
 
+	name()
+	{
+		if (this.is('wall')) return 'stone wall';
+		if (this.getMonster()) return this.getMonster().name();
+		if (this.getItem()) return this.getItem().name();
+		return 'stone floor';
+	}
+
 	getMonster()
 	{
 		return this.getTile().properties.monster;
@@ -54,9 +62,16 @@ Boo.WorldPos = class
 	{
 		var tile = this.getTile('items');
 		if (!tile) return null;
-		world.map.removeTile(this.x, this.y, 'items');
 		return Boo.Item.createFromTile(tile.index);
 	}
+
+	takeItem()
+	{
+		var tile = this.getTile('items');
+		if (!tile) return null;
+		world.map.removeTile(this.x, this.y, 'items');
+		return Boo.Item.createFromTile(tile.index);		
+	};
 
 	putItem(item)
 	{

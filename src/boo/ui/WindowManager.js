@@ -121,10 +121,11 @@ Boo.ui.WindowManager = class
 		this.marker.x = tile.x * world.map.tileWidth;
 		this.marker.y = tile.y * world.map.tileHeight;
 
-		if (game.input.mousePointer.isDown)
+		if (game.input.activePointer.leftButton.isDown)
 		{
-			console.log(tile.properties);
-      wm.hint(this.marker.x + world.map.tileWidth, this.marker.y - world.map.tileHeight, "Hello.");
+      wm.hint(game.input.mousePointer.x + 30, game.input.mousePointer.y - 30, 
+        "You see "+world.getPos(tile.x, tile.y).name()
+      );
 		}
 	}
 }

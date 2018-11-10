@@ -49,7 +49,7 @@ Boo.Player = class extends Boo.Creature
 	}
 
 	onStep() {
-		var item = this.pos.getItem();
+		var item = this.pos.takeItem();
 		if (!item) return;
 
 		if (this.inventoryPut(item)) {
