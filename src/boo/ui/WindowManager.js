@@ -124,7 +124,7 @@ Boo.ui.WindowManager = class
 		if (game.input.activePointer.leftButton.isDown)
 		{
       wm.hint(game.input.mousePointer.x + 30, game.input.mousePointer.y - 30, 
-        "You see "+world.getPos(tile.x, tile.y).name()
+        "You see "+world.getPos(tile.x, tile.y).name().indef()
       );
 		}
 	}

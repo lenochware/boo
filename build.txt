@@ -1,3 +1,4 @@
+src/boo/utils/String.js
 src/boo/Entity.js
 src/boo/Movable.js
 src/boo/Creature.js

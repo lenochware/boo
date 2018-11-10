@@ -34,7 +34,7 @@ Boo.ui.WndInventory = class
 	{
 		var item = this.owner.inventory[index];
 		
-		this.wm.popup(null, item.name(), item.shortDesc(), 
+		this.wm.popup(null, item.name().indef().capitalize(), item.shortDesc(), 
 			[{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Drop', onclick: "wm.inventory.drop("+index+")"}]
 		);
 		console.log(item.getActions());
