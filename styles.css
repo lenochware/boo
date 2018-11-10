@@ -66,6 +66,10 @@ body {
 	background-position: 88px top;
 }
 
+.ui-hint {
+	position: absolute;
+}
+
 .ui-overlay {
 	position: fixed;
 	top: 0;

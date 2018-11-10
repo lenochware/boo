@@ -68,6 +68,29 @@ Boo.ui.WindowManager = class
 		);
 	}
 
+  hint(x, y, message)
+  {
+    if ($('#hint01').length == 0) {
+      var d = document.createElement('div');
+      $(d).addClass("ui-hint")
+      .attr("id", "hint01")
+      .width(400)
+      .appendTo('#'+game.parent).hide();
+    }
+
+    $('#hint01').addClass("ui-hint")
+    .css({left:x,top:y})
+    .html(message)
+    .show()
+    .delay(2000)
+    .fadeOut();
+  }
+
+  removeHint(elem)
+  {
+    setTimeout()
+  }
+
 	message(m, cssClass = 'msg')
 	{
 		$(this.messages).append(`<span class="${cssClass}">${m}</span>`);
@@ -101,6 +124,7 @@ Boo.ui.WindowManager = class
 		if (game.input.mousePointer.isDown)
 		{
 			console.log(tile.properties);
+      wm.hint(this.marker.x + world.map.tileWidth, this.marker.y - world.map.tileHeight, "Hello.");
 		}
 	}
 }
