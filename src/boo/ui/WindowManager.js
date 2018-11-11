@@ -70,25 +70,18 @@ Boo.ui.WindowManager = class
 
   hint(x, y, message)
   {
-    if ($('#hint01').length == 0) {
-      var d = document.createElement('div');
-      $(d).addClass("ui-hint")
-      .attr("id", "hint01")
-      .width(400)
-      .appendTo('#'+game.parent).hide();
-    }
+    $('#hint01').remove();
 
-    $('#hint01').addClass("ui-hint")
+    var d = document.createElement('div');
+    $(d).addClass("ui-hint")
+    .attr("id", "hint01")
+    .width(400)
     .css({left:x,top:y})
     .html(message)
     .show()
     .delay(2000)
-    .fadeOut();
-  }
-
-  removeHint(elem)
-  {
-    setTimeout()
+    .fadeOut()    
+    .appendTo('#'+game.parent);
   }
 
 	message(m, cssClass = 'msg')
