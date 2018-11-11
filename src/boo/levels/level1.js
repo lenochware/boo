@@ -6,6 +6,12 @@ Boo.levels.level1 = {
 	"tilesets": {
 		"tiles1": {
 			"image": "assets/tilemaps/tiles/tiles1_big.png",
+			"tiles": [
+				"?", "stone_floor", "moss_floor", "well", "stone_wall", "door", "door", "stairs_up", "stairs_down", 
+				"broken_floor", "locked_door", "?", "?", "?", "?", "grass",
+				"fake_wall", "trap", "?", "trap", "?", "trap", "?", "trap", "?", "blood_stain", "door", "door", 
+				"trap", "?", "sign", "trap", "?"
+			]
 		},
 		
 		"items": {
@@ -124,6 +130,26 @@ Boo.levels.level1 = {
 			"tags": ["food"],
 			"name": "ration of food",
 			"desc": "Nothing fancy here: dried meat, some biscuits - things like that."
+		}
+	},
+
+	"tiles": {
+		"stone_wall": {
+			"tags": ["wall"],
+			"name": "stone wallx",
+			"desc": "You see nothing interesting."
+		},
+
+		"fake_wall": {
+			"tags": ["wall"],
+			"name": "stone wall",
+			"desc": "You see nothing interesting."
+		},
+
+		"stone_floor": {
+			"tags": ["floor"],
+			"name": "stone wall",
+			"desc": "You see nothing interesting."
 		}
 	}
 }
