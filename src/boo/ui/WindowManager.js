@@ -84,6 +84,21 @@ Boo.ui.WindowManager = class
     .appendTo('#'+game.parent);
   }
 
+  flashMsg(x, y, message)
+  {
+    var d = document.createElement('div');
+    $(d).addClass("ui-hint animated fadeOutUp")
+    .width(400)
+    .css({left:x,top:y})
+    .html(message)
+    .show()
+    .delay(1000)
+    .queue(function() {
+      $(this).remove();
+    }) 
+    .appendTo('#'+game.parent);
+  }
+
 	message(m, cssClass = 'msg')
 	{
 		$(this.messages).append(`<span class="${cssClass}">${m}</span>`);
