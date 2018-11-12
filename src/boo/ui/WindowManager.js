@@ -68,12 +68,12 @@ Boo.ui.WindowManager = class
 		);
 	}
 
-  hint(x, y, message)
+  popupMsg(x, y, message, cssClass = '')
   {
     $('#hint01').remove();
 
     var d = document.createElement('div');
-    $(d).addClass("ui-hint")
+    $(d).addClass("popup-msg " + cssClass)
     .attr("id", "hint01")
     .width(400)
     .css({left:x,top:y})
@@ -84,12 +84,12 @@ Boo.ui.WindowManager = class
     .appendTo('#'+game.parent);
   }
 
-  flashMsg(x, y, message)
+  flashMsg(x, y, message, cssClass = '')
   {
     var d = document.createElement('div');
-    $(d).addClass("ui-hint animated fadeOutUp")
+    $(d).addClass("popup-msg animated fadeout-up " + cssClass)
     .width(400)
-    .css({left:x,top:y})
+    .css({left:x,top:y - 32})
     .html(message)
     .show()
     .delay(1000)
@@ -131,7 +131,7 @@ Boo.ui.WindowManager = class
 
 		if (game.input.activePointer.leftButton.isDown)
 		{
-      wm.hint(game.input.mousePointer.x + 30, game.input.mousePointer.y - 30, 
+      wm.popupMsg(game.input.mousePointer.x + 30, game.input.mousePointer.y - 30, 
         "You see "+world.getPos(tile.x, tile.y).name().indef()
       );
 		}

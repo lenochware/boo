@@ -23,6 +23,8 @@ Boo.Creature = class extends Boo.Movable
 			wm.message(this.name() + " hits " + this.target.name() + ".");
 		}
 
+		wm.flashMsg(this.target.pos.px, this.target.pos.py, '-1', "msg-danger");
+
 		if (this.target.isDestroyed()) this.target = null;
 	}
 
@@ -37,10 +39,10 @@ Boo.Creature = class extends Boo.Movable
 	die()
 	{
 		if (this.isPlayer()) {
-			wm.message("You die.", "msg msg-negative");
+			wm.message("You die.", "msg msg-danger");
 		}
 		else {
-			wm.message(`You defeated ${this.name()}.`);
+			wm.message(`You defeated ${this.name()}.`, "msg msg-hilite");
 		}
 
 		this.health = 0;
