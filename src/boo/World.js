@@ -8,6 +8,7 @@ Boo.World = class
 		this.player = null;
 		this.map = null;
 		this.currentLevel = null;
+		this.tilesets = {};
 	}
 
 	loadLevel(level)
@@ -23,7 +24,11 @@ Boo.World = class
 		this.map = game.add.tilemap('map');
 		_.each(this.currentLevel.tilesets, (tmp,key) =>  this.map.addTilesetImage(key));
 		this.map.createLayer('floor').resizeWorld();
-		this.map.createLayer('items');		
+		this.map.createLayer('items');
+
+		for (var i = 0; i < this.map.tilesets.length; i++) {
+			this.tilesets[this.map.tilesets[i].name] = this.map.tilesets[i];
+		}
 	}
 
 	setPlayer(player, x, y)

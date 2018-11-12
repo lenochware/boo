@@ -1,9 +1,10 @@
 var Boo = Boo || {};
 
-Boo.WorldPos = class
+Boo.WorldPos = class extends Boo.Entity
 {
 	constructor(x, y)
 	{
+		super('unknown', 'tiles');
 		this.set(x, y);
 	}
 
@@ -20,6 +21,8 @@ Boo.WorldPos = class
 		this.px = this.x * world.map.tileWidth + world.map.tileWidth / 2;
 		this.py = this.y * world.map.tileHeight + world.map.tileHeight / 2;
 
+		this.id = world.currentLevel.tilesets.tiles1.tiles[this.getTile().index - world.tilesets.tiles1.firstgid];
+
 		return this;
 	}
 
@@ -33,19 +36,11 @@ Boo.WorldPos = class
 		return this.set(src.x, src.y);
 	}
 
-	is(tag)
-	{
-		if (tag == 'wall') return (this.getTile().index == 17);
-		if (tag == 'floor') return (this.getTile().index != 17);
-		return false;
-	}
-
 	name()
 	{
-		if (this.is('wall')) return 'stone wall';
 		if (this.getMonster()) return this.getMonster().name();
 		if (this.getItem()) return this.getItem().name();
-		return 'stone floor';
+		return super.name();
 	}
 
 	getMonster()

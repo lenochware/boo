@@ -14,7 +14,7 @@ Boo.Entity = class
 			var prop = world.currentLevel[this.category][this.id][propId];
 		}
 		catch(err) {
-			throw `Missing property "${this.category+': '+this.id+'.'+propId}".`;
+			return `missing:${this.category+'.'+this.id+'.'+propId}.`;
 		}
 		
 		return prop;

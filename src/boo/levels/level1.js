@@ -9,7 +9,7 @@ Boo.levels.level1 = {
 			"tiles": [
 				"?", "stone_floor", "moss_floor", "well", "stone_wall", "door", "door", "stairs_up", "stairs_down", 
 				"broken_floor", "locked_door", "?", "?", "?", "?", "grass",
-				"fake_wall", "trap", "?", "trap", "?", "trap", "?", "trap", "?", "blood_stain", "door", "door", 
+				"fake_wall", "trap", "?", "trap", "?", "trap", "?", "trap", "blood_stain", "door", "door", 
 				"trap", "?", "sign", "trap", "?"
 			]
 		},
@@ -148,7 +148,7 @@ Boo.levels.level1 = {
 
 		"stone_floor": {
 			"tags": ["floor"],
-			"name": "stone wall",
+			"name": "stone floor",
 			"desc": "You see nothing interesting."
 		}
 	}
