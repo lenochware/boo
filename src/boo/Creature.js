@@ -5,6 +5,7 @@ Boo.Creature = class extends Boo.Movable
 	constructor(id)
 	{
 		super(id, 'monsters');
+		this.health = this.getProperty('health') || 10;		
 	}
 
 	attack()
@@ -62,4 +63,9 @@ Boo.Creature = class extends Boo.Movable
 	{
 		return false;
 	}
+
+	isDestroyed()
+	{
+		return (this.health <= 0);
+	}	
 }

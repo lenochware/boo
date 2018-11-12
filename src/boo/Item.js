@@ -5,6 +5,7 @@ Boo.Item = class extends Boo.Entity
 	constructor(id)
 	{
 		super(id, 'items');
+		this.health = this.getProperty('health') || 10;		
 	}
 
 	static createFromTile(tileIndex)
@@ -17,6 +18,11 @@ Boo.Item = class extends Boo.Entity
 		item.id = world.currentLevel.tilesets.items.tiles[item.index];
 		return item;
 	}
+
+	isDestroyed()
+	{
+		return (this.health <= 0);
+	}	
 
 	getActions()
 	{

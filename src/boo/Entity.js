@@ -6,7 +6,6 @@ Boo.Entity = class
 	{
 		this.id = id;
 		this.category = category;
-		this.health = this.getProperty('health') || 10;
 	}
 
 	getProperty(propId)
@@ -34,10 +33,5 @@ Boo.Entity = class
 	shortDesc()
 	{
 		return this.getProperty("desc");
-	}
-
-	isDestroyed()
-	{
-		return (this.health <= 0);
 	}
 }
