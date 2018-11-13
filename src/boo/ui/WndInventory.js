@@ -22,11 +22,7 @@ Boo.ui.WndInventory = class
 
 	setItem(item, index)
 	{
-		var icon = document.createElement('div');
-
-		$(icon).addClass('ui-item')
-		.css('background-position',`${-item.icon.x}px ${-item.icon.y}px`)
-		.appendTo("#in"+ (index + 1))
+		item.getIcon().appendTo("#in"+ (index + 1))
 		.click(()=>this.showItemDetail(index));
 	}
 
@@ -34,7 +30,7 @@ Boo.ui.WndInventory = class
 	{
 		var item = this.owner.inventory[index];
 		
-		this.wm.popup(null, item.name().indef().capitalize(), item.shortDesc(), 
+		this.wm.popup(item.getIcon().get(0).outerHTML, item.name().indef().capitalize(), item.shortDesc(), 
 			[{label: "Ok", onclick: "wm.closeWindow('popup')"}, {label: 'Drop', onclick: "wm.inventory.drop("+index+")"}]
 		);
 		console.log(item.getActions());

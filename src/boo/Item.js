@@ -14,7 +14,6 @@ Boo.Item = class extends Boo.Entity
 		item.tileIndex = tileIndex;
 		var ts = world.getTileset(tileIndex);
 		item.index = tileIndex - ts.firstgid;
-		item.icon = new Phaser.Point((item.index % 8) * 32, Math.floor(item.index / 8) * 32);
 		item.id = world.currentLevel.tilesets.items.tiles[item.index];
 		return item;
 	}
@@ -22,7 +21,16 @@ Boo.Item = class extends Boo.Entity
 	isDestroyed()
 	{
 		return (this.health <= 0);
-	}	
+	}
+
+	getIcon()
+	{
+		var icon = document.createElement('div');
+		var pos = new Phaser.Point((this.index % 8) * 32, Math.floor(this.index / 8) * 32);
+
+		return $(icon).addClass('ui-item')
+			.css('background-position',`${-pos.x}px ${-pos.y}px`);
+	}
 
 	getActions()
 	{
