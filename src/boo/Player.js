@@ -48,6 +48,14 @@ Boo.Player = class extends Boo.Creature
 		}
 	}
 
+	eat(index)
+	{
+		console.log('eat',index);
+		var item = this.inventoryGet(index);
+		if (!item) return;		
+		wm.message(`You eat ${item.name()}.`);
+	}
+
 	onStep() {
 		var item = this.pos.takeItem();
 		if (!item) return;

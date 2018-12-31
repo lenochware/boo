@@ -8,13 +8,16 @@ Boo.Entity = class
 		this.category = category;
 	}
 
-	getProperty(propId)
+	getProperty(propId, propDefault = null)
 	{
 		try {
 			var prop = world.currentLevel[this.category][this.id][propId];
+			if (typeof prop === "undefined" && propDefault) {
+				prop = propDefault;
+			}
 		}
 		catch(err) {
-			return `missing:${this.category+'.'+this.id+'.'+propId}.`;
+			prop = `missing:${this.category+'.'+this.id+'.'+propId}.`;
 		}
 		
 		return prop;
